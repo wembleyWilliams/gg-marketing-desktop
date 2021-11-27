@@ -1,0 +1,17 @@
+.description_card {
+  background-color: #2b2b2b !important;
+  border-radius: 35px !important;
+  color: white !important;
+}
+.description_card__title {
+  text-align: center;
+  font-size: 16px;
+}
+.description_card__body {
+  text-align: center;
+  font-size: 12px;
+  height: max-content;
+  padding-bottom: 2rem;
+}
+
+/*# sourceMappingURL=index.css.map */

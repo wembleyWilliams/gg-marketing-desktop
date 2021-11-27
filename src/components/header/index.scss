@@ -1,0 +1,13 @@
+.profile_bubble {
+  width: 200px;
+  height: 200px;
+  border-radius: 50% !important;
+  z-index: 200;
+
+  &__image {
+    height: inherit;
+    width:inherit;
+
+    object-fit: contain !important;
+  }
+}

@@ -1,0 +1,20 @@
+.main-body {
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.background {
+  background-image: linear-gradient(#ff9933, #d14545);
+}
+
+.business-title {
+  z-index: 300;
+  padding: 0 20px;
+  font-weight: 900;
+  font-size: 1rem;
+  border-radius: 35px !important;
+  width: max-content;
+}
+
+/*# sourceMappingURL=index.css.map */
