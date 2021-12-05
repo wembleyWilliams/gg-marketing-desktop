@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {Container, Paper, Stack} from "@mui/material";
 import './index.scss';
-import Header from "../../components/header";
-import Description from "../../components/description";
-import Socials from "../../components/socials";
+import Header from "../header";
+import Description from "../description";
+import Socials from "../socials";
 import services from "../../services";
 import {useDispatch, useSelector} from "react-redux";
 import {setBusinessDetails} from "../../actions/applicationActions";
-import {State} from "../../reducers/index"
-import Loading from "../../components/common/loading";
+import {State} from "../../reducers"
+import Loading from "../common/loading";
 
 const log = require('loglevel');
 log.setDefaultLevel("INFO")

@@ -1,0 +1,22 @@
+.wrapper {
+  background-color: black;
+  height: 100vh;
+  padding: 1rem 0rem;
+
+  &__container {
+    padding: 1rem 0rem;
+    background-color: ghostwhite;
+    border-radius: 10px;
+    height: 100%;
+
+    &__left-column {
+      padding-left: 1rem;
+      background-color: #2b2b2b;
+    }
+
+    &__right-column {
+
+    }
+  }
+}
+
