@@ -1,0 +1,29 @@
+.profile-container {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  grid-column-gap: 0;
+  grid-template-areas: "picture text";
+}
+.profile-container__picture {
+  grid-area: picture;
+}
+.profile-container__text {
+  grid-area: text;
+  grid-auto-columns: max-content;
+  display: grid;
+  grid-auto-rows: 30px;
+}
+
+.profile_bubble {
+  margin: 0.3rem;
+  margin-right: 20px;
+}
+.profile_bubble__image {
+  height: 120px;
+  object-fit: cover !important;
+  border-radius: 50%;
+  border: 0.5px solid #ff0000;
+  width: 120px;
+}
+
+/*# sourceMappingURL=index.css.map */

@@ -1,0 +1,16 @@
+.wrapper {
+  background-color: #EEEEEE;
+  height: 100vh;
+  padding: 1rem 0rem;
+}
+.wrapper__container {
+  padding: 1rem 1rem;
+  background-color: white;
+  border-radius: 20px;
+  height: 100%;
+}
+.wrapper__container__left-column {
+  padding-left: 1rem;
+}
+
+/*# sourceMappingURL=index.css.map */

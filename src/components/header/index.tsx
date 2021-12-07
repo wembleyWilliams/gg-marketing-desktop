@@ -12,7 +12,6 @@ const Header = (props: Props) => {
         <>
             <Card className={"profile_bubble"}>
                 <CardMedia
-                    
                     className={"profile_bubble__image"}
                     component="img"
                     src={props.image}
