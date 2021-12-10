@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.scss";
 import {Paper, Stack} from "@mui/material";
-import {Add, AddCircle, AddCircleRounded, Twitter} from "@mui/icons-material";
+import {Add, AddCircleRounded, Twitter} from "@mui/icons-material";
 
 const ProfileDataSection = () => {
     
@@ -49,6 +49,7 @@ const ProfileDataSection = () => {
                                 <h2>ADD</h2>
                             </div>
                         </Paper>
+                        
                         <Paper className={"container__right-column__social-box"}>
                             <div className={"container__right-column__social-box__icon"}>
                                 <Twitter fontSize={"large"}/>

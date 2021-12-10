@@ -55,13 +55,23 @@
         grid-area: 3;
         background-color: white;
         padding: 1rem;
-        overflow: auto;
+
         box-sizing: border-box;
         margin: 30px auto 0 auto;
         border-radius: 20px;
-        scrollbar-width: none;
+
         text-align: center;
         border: 1px solid #EEEEEE;
+      }
+
+      &__upload-section-description p {
+        padding: 1rem;
+        scrollbar-width: none;
+        overflow: auto;
+      }
+
+      &__upload-section-description h2 {
+        text-transform: uppercase;
       }
     }
 
