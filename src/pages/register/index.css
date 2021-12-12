@@ -1,0 +1,112 @@
+.register-wrapper {
+  height: 100vh;
+  width: 100vw;
+  overflow: auto;
+  background-color: #EEEEEE;
+}
+
+.register-container {
+  display: grid;
+  width: 100vw;
+  grid-template-rows: 10% 78%;
+  grid-row-gap: 20px;
+  grid-template-areas: "title" "body";
+}
+.register-container__title {
+  grid-area: title;
+}
+.register-container__title h1 {
+  font-family: canada-type-gibson, sans-serif;
+  font-style: normal;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+@media screen and (min-width: 1025px) {
+  .register-container__title h1 {
+    font-size: 36px;
+  }
+}
+.register-container__title b {
+  font-family: canada-type-gibson, sans-serif;
+  font-style: normal;
+  color: #fd553c;
+  font-size: 72px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+@media screen and (min-width: 1025px) {
+  .register-container__title b {
+    font-size: 36px;
+  }
+}
+.register-container__body {
+  max-width: inherit;
+  padding: 0rem 2rem;
+  grid-area: body;
+  display: grid;
+  align-content: center;
+  align-items: center;
+  grid-column-gap: 20px;
+  grid-template-areas: "card card card";
+}
+.register-container__body Paper {
+  grid-area: card;
+}
+.register-container__text {
+  height: 100%;
+}
+.register-container__text b {
+  color: #fd553c;
+  font-size: 28px;
+  font-weight: bold;
+}
+.register-container__text h2 {
+  text-align: left;
+  font-size: 28px;
+}
+.register-container__text p {
+  font-size: 20px;
+  font-weight: bolder;
+}
+.register-container__text input {
+  width: 100%;
+  border: none;
+  border-bottom: 3px solid #fd553c;
+  background-color: #EEE;
+  height: 43px;
+}
+
+.continue-btn {
+  margin-left: 85% !important;
+}
+.continue-btn__icon {
+  color: white;
+  font-size: 2em !important;
+  background: #fd553c;
+  border-radius: 50%;
+}
+
+.photo-bubble {
+  height: 200px;
+  width: 200px;
+  background: #fd553c;
+  border-radius: 50%;
+}
+.photo-bubble__add-bubble {
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid #EEEEEE;
+  position: relative;
+  top: 140px;
+  left: 155px;
+  height: 50px;
+  width: 50px;
+  display: grid;
+  align-content: center;
+}
+.photo-bubble__add-bubble__icon {
+  fill: #fd553c;
+}
+
+/*# sourceMappingURL=index.css.map */

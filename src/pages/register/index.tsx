@@ -1,7 +1,8 @@
 import React from "react";
 import "./index.scss";
-import {Button, Container, Divider, IconButton, Paper, Stack, TextField} from "@mui/material";
+import {Container, Divider, IconButton, Paper, Stack} from "@mui/material";
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
+import {Add} from "@mui/icons-material";
 
 const Register = () => {
     
@@ -14,7 +15,10 @@ const Register = () => {
                 <div className={"register-container__body"}>
                     <Paper sx={{
                         borderRadius: "60px",
-                        maxWidth: "760px", minWidth: "540px"
+                        maxWidth: "370px",
+                        minWidth: "350px",
+                        maxHeight: "580px",
+                        minHeight: "560px"
                     }}>
                         <Container className={"register-container__text"} maxWidth={"xs"}>
                             <Stack spacing={3}>
@@ -28,7 +32,7 @@ const Register = () => {
                                     required
                                     id="name"
                                     name="name"
-                                    placeholder={"Full Name"}
+                                    placeholder={" Full Name"}
                                 />
                                 
                                 <p>Business Name</p>
@@ -36,86 +40,102 @@ const Register = () => {
                                     required
                                     id="businessName"
                                     name="businessName"
-                                    placeholder={"Business Name"}
+                                    placeholder={" Business Name"}
                                 />
-                                <Divider sx={{paddingTop: '2rem',border:'none'}}/>
-                                <IconButton className={"continue-btn"}>
+                                
+                                {/*<Divider sx={{paddingTop: '10px', border: 'none'}}/>*/}
+                                
+                                <IconButton className={"continue-btn"} disableRipple>
                                     <ArrowCircleRightIcon className={"continue-btn__icon"}/>
                                 </IconButton>
-                                
-                            </Stack>
                             
+                            </Stack>
+                        
                         </Container>
                     
                     </Paper>
                     <Paper sx={{
                         borderRadius: "60px",
-                        maxWidth: "760px", minWidth: "540px"
+                        maxWidth: "370px",
+                        minWidth: "350px",
+                        maxHeight: "580px",
+                        minHeight: "560px"
                     }}>
                         <Container className={"register-container__text"} maxWidth={"xs"}>
-                            <Stack spacing={3}>
+                            <Stack spacing={3} justifyContent={"center"}
+                                   alignItems={"center"}>
                                 <h2>
-                                    <b>Okay</b>, lets get to know you a little
-                                    better by giving us your name and company name.
+                                    <b>Now</b>, lets see your face or even a logo
+                                    for us to know what you want to look like to us.
                                 </h2>
-            
-                                <p>Full Name</p>
-                                <input
-                                    required
-                                    id="name"
-                                    name="name"
-                                    placeholder={"Full Name"}
-                                />
-            
-                                <p>Business Name</p>
-                                <input
-                                    required
-                                    id="businessName"
-                                    name="businessName"
-                                    placeholder={"Business Name"}
-                                />
-                                <Divider sx={{paddingTop: '2rem',border:'none'}}/>
-                                <IconButton className={"continue-btn"}>
+                                
+                                <div className={"photo-bubble"}>
+                                    
+                                    <div className={"photo-bubble__add-bubble"}>
+                                        <IconButton>
+                                            <Add className={"photo-bubble__add-bubble__icon"}/>
+                                        </IconButton>
+                                    </div>
+                                </div>
+                            
+                                <Divider sx={{paddingTop: '10px', border: 'none'}}/>
+                                
+                                <IconButton className={"continue-btn"} disableRipple>
                                     <ArrowCircleRightIcon className={"continue-btn__icon"}/>
                                 </IconButton>
-        
+                            
                             </Stack>
-    
+                        
                         </Container>
                     </Paper>
                     <Paper sx={{
                         borderRadius: "60px",
-                        maxWidth: "760px", minWidth: "540px"
+                        maxWidth: "370px",
+                        minWidth: "350px",
+                        maxHeight: "580px",
+                        minHeight: "560px"
                     }}>
                         <Container className={"register-container__text"} maxWidth={"xs"}>
-                            <Stack spacing={3}>
+                            <Stack>
                                 <h2>
-                                    <b>Okay</b>, lets get to know you a little
-                                    better by giving us your name and company name.
+                                    <b>Then</b> fill out the <br/> rest here
                                 </h2>
-            
-                                <p>Full Name</p>
-                                <input
-                                    required
-                                    id="name"
-                                    name="name"
-                                    placeholder={"Full Name"}
-                                />
-            
-                                <p>Business Name</p>
-                                <input
-                                    required
-                                    id="businessName"
-                                    name="businessName"
-                                    placeholder={"Business Name"}
-                                />
-                                <Divider sx={{paddingTop: '2rem',border:'none'}}/>
+                                <div className={"section"}>
+                                    
+    
+                                    <p>Email</p>
+                                    <input
+                                        required
+                                        id="email"
+                                        name="email"
+                                        placeholder={" Email"}
+                                    />
+    
+                                    <p>Password</p>
+                                    <input
+                                        required
+                                        id="password"
+                                        name="password"
+                                        placeholder={" Password"}
+                                    />
+    
+                                    <p>Re-enter Password</p>
+                                    <input
+                                        required
+                                        id="password"
+                                        name="password"
+                                        placeholder={" Password"}
+                                    />
+                                </div>
+                                
+                                <Divider sx={{paddingTop: '10px', border: 'none'}}/>
+    
                                 <IconButton className={"continue-btn"}>
                                     <ArrowCircleRightIcon className={"continue-btn__icon"}/>
                                 </IconButton>
-        
+                    
                             </Stack>
-    
+                    
                         </Container>
                     </Paper>
                 </div>
