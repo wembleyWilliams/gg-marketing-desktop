@@ -1,0 +1,99 @@
+.login-wrapper {
+  height: 100vh;
+  background-color: #EEEEEE;
+}
+
+.image-container {
+  height: 100%;
+  display: grid;
+  align-content: center;
+  background-color: #2b2b2b;
+  border-radius: 20px;
+}
+.image-container img {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.login-container {
+  margin: auto !important;
+  border-radius: 20px !important;
+  display: grid;
+  height: 500px;
+  background-color: #FFF;
+  grid-template-columns: 50% 50%;
+  grid-template-areas: "left right";
+  max-width: 600px !important;
+}
+@media screen and (max-width: 1024px) {
+  .login-container {
+    max-width: 700px !important;
+  }
+}
+.login-container__left-column {
+  grid-area: left;
+}
+.login-container__right-column {
+  grid-area: right;
+}
+.login-container__right-column__text {
+  display: grid !important;
+  height: 100%;
+  grid-template-rows: 20% 40% 40%;
+  grid-template-areas: "title" "body" "footer";
+}
+.login-container__right-column__text__title {
+  font-size: 28px;
+  grid-area: title;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bolder;
+}
+.login-container__right-column__text__title b {
+  color: #fd553c;
+}
+.login-container__right-column__text__fields {
+  grid-area: body;
+}
+.login-container__right-column__text__fields p {
+  text-transform: uppercase;
+  font-size: 20px;
+}
+.login-container__right-column__text__button-section {
+  margin: auto;
+  width: 50%;
+  grid-area: footer;
+  display: grid;
+  align-content: baseline;
+  grid-template-rows: 50% 50%;
+  grid-template-areas: "other" "button";
+  grid-row-gap: 20px;
+}
+.login-container__right-column__text__button-section Button {
+  padding: 0.8rem;
+  color: white;
+  height: 20px;
+  border-radius: 20px;
+  background-color: #2b2b2b;
+}
+.login-container__right-column__text__button-section Button p {
+  text-transform: uppercase;
+  font-size: 24px;
+  font-weight: 900;
+}
+.login-container__right-column__text__fields input {
+  width: 100%;
+  border: none;
+  border-bottom: 3px solid #fd553c;
+  background-color: #EEE;
+  height: 43px;
+}
+
+.forgot-password-text {
+  text-align: right;
+  font-size: 13px !important;
+  text-transform: uppercase;
+}
+
+/*# sourceMappingURL=index.css.map */
