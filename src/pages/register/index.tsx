@@ -1,147 +1,200 @@
 import React from "react";
 import "./index.scss";
-import {Container, Divider, IconButton, Paper, Stack} from "@mui/material";
-import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
-import {Add} from "@mui/icons-material";
+import {
+  Container,
+  Divider,
+  FilledInput,
+  FormControl, FormHelperText,
+  IconButton, Input,
+  InputLabel, OutlinedInput,
+  Paper,
+  Stack,
+  Theme
+} from "@mui/material";
+import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import {Add, InputRounded} from "@mui/icons-material";
+import {createStyles, makeStyles} from "@mui/styles";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    cssLabel: {
+      color: 'green'
+    },
+    
+    cssOutlinedInput: {
+      '&$cssFocused $notchedOutline': {
+        borderColor: `purple !important`,
+      }
+    },
+    
+    cssFocused: {},
+    
+    notchedOutline: {
+      borderWidth: '1px',
+      borderColor: 'green !important'
+    },
+  }));
 
 const Register = () => {
-    
-    return (
-        <Container className={"register-wrapper"} maxWidth={false} disableGutters={true}>
-            <div className={"register-container"}>
-                <div className={"register-container__title"}>
-                    <h1><b>Let's</b> Get You Signed Up</h1>
-                </div>
-                <div className={"register-container__body"}>
-                    <Paper sx={{
-                        borderRadius: "60px",
-                        maxWidth: "370px",
-                        minWidth: "350px",
-                        maxHeight: "580px",
-                        minHeight: "560px"
-                    }}>
-                        <Container className={"register-container__text"} maxWidth={"xs"}>
-                            <Stack spacing={3}>
-                                <h2>
-                                    <b>Okay</b>, lets get to know you a little
-                                    better by giving us your name and company name.
-                                </h2>
-                                
-                                <p>Full Name</p>
-                                <input
-                                    required
-                                    id="name"
-                                    name="name"
-                                    placeholder={" Full Name"}
-                                />
-                                
-                                <p>Business Name</p>
-                                <input
-                                    required
-                                    id="businessName"
-                                    name="businessName"
-                                    placeholder={" Business Name"}
-                                />
-                                
-                                {/*<Divider sx={{paddingTop: '10px', border: 'none'}}/>*/}
-                                
-                                <IconButton className={"continue-btn"} disableRipple>
-                                    <ArrowCircleRightIcon className={"continue-btn__icon"}/>
-                                </IconButton>
-                            
-                            </Stack>
-                        
-                        </Container>
+  const classes = useStyles();
+  return (
+    <div className={"register-wrapper"} >
+      <FormControl variant={"filled"}>
+        <div className={"register-container"}>
+          <div className={"register-container__title"}>
+            <h1><b>Let's</b> Get You Signed Up</h1>
+          </div>
+          <Divider sx={{paddingTop: '20px', border: 'none'}}/>
+          <div className={"register-container__body"}>
+            
+            {/*Section 1*/}
+            <Paper sx={{
+              borderRadius: "60px",
+              maxWidth: "370px",
+              minWidth: "350px",
+              maxHeight: "580px",
+              minHeight: "560px"
+            }}>
+              <div className={"register-container__text"} >
+                  <h2>
+                    <b>Okay</b>, lets get to know you a little
+                    better by giving us your name and company name.
+                  </h2>
+                  
+                  <FormControl>
+                    <InputLabel>Name</InputLabel>
+                    <Input
+                      required
+                      id="name"
+                      name="name"
+                      placeholder={"What's your name?"}
+                    />
+                    <FormHelperText className={"helper-text"}>
+                      Enter your full name here
+                    </FormHelperText>
+                  </FormControl>
+                  
+                  <FormControl>
+                    <InputLabel>Business Name</InputLabel>
+                    <Input
+                      required
+                      id="businessName"
+                      name="businessName"
+                      placeholder={"And your business name?"}
+                    />
+                    <FormHelperText className={"helper-text"}>
+                      Enter your business's name here
+                    </FormHelperText>
+                  </FormControl>
+                  
+                  <Divider sx={{paddingTop: '10px', border: 'none'}}/>
+                  
+                  <IconButton className={"continue-btn"} disableRipple>
+                    <CheckCircleOutlinedIcon className={"continue-btn__icon"}/>
+                  </IconButton>
+              
+              </div>
+            
+            </Paper>
+            
+            {/*Section 2 */}
+            <Paper sx={{
+              borderRadius: "60px",
+              maxWidth: "370px",
+              minWidth: "350px",
+              maxHeight: "580px",
+              minHeight: "560px"
+            }}>
+              <div className={"register-container__text"} >
+                  <h2>
+                    <b>Now</b>, lets see your face or even a logo
+                    for us to know what you want to look like to us.
+                  </h2>
+                  <div className={"photo-bubble-wrapper"}>
+                    <div className={"photo-bubble"}>
+                      <div className={"photo-bubble__add-bubble"}>
+                        <IconButton disableRipple>
+                          <Add className={"photo-bubble__add-bubble__icon"}/>
+                        </IconButton>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <Divider sx={{paddingTop: '10px', border: 'none'}}/>
+  
+                  <IconButton className={"continue-btn"} disableRipple>
+                    <CheckCircleOutlinedIcon className={"continue-btn__icon"}/>
+                  </IconButton>
+              </div>
+            </Paper>
+            
+            {/*Section 3*/}
+            <Paper sx={{
+              borderRadius: "60px",
+              maxWidth: "370px",
+              minWidth: "350px",
+              maxHeight: "580px",
+              minHeight: "560px"
+            }}>
+              <div className={"register-container__text"} >
+                  <h2>
+                    <b>Then</b> fill out the <br/> rest here
+                  </h2>
+                    <FormControl>
+                      <InputLabel>Email</InputLabel>
+                      <Input
+                        required
+                        id="email"
+                        name="email"
+                        placeholder={"What's your email address?"}
+                      />
+                      <FormHelperText className={"helper-text"}>
+                        Enter personal/business email address here.
+                        This email will be used for login and contact purposes.
+                      </FormHelperText>
+                    </FormControl>
                     
-                    </Paper>
-                    <Paper sx={{
-                        borderRadius: "60px",
-                        maxWidth: "370px",
-                        minWidth: "350px",
-                        maxHeight: "580px",
-                        minHeight: "560px"
-                    }}>
-                        <Container className={"register-container__text"} maxWidth={"xs"}>
-                            <Stack spacing={3} justifyContent={"center"}
-                                   alignItems={"center"}>
-                                <h2>
-                                    <b>Now</b>, lets see your face or even a logo
-                                    for us to know what you want to look like to us.
-                                </h2>
-                                
-                                <div className={"photo-bubble"}>
-                                    
-                                    <div className={"photo-bubble__add-bubble"}>
-                                        <IconButton>
-                                            <Add className={"photo-bubble__add-bubble__icon"}/>
-                                        </IconButton>
-                                    </div>
-                                </div>
-                            
-                                <Divider sx={{paddingTop: '10px', border: 'none'}}/>
-                                
-                                <IconButton className={"continue-btn"} disableRipple>
-                                    <ArrowCircleRightIcon className={"continue-btn__icon"}/>
-                                </IconButton>
-                            
-                            </Stack>
-                        
-                        </Container>
-                    </Paper>
-                    <Paper sx={{
-                        borderRadius: "60px",
-                        maxWidth: "370px",
-                        minWidth: "350px",
-                        maxHeight: "580px",
-                        minHeight: "560px"
-                    }}>
-                        <Container className={"register-container__text"} maxWidth={"xs"}>
-                            <Stack>
-                                <h2>
-                                    <b>Then</b> fill out the <br/> rest here
-                                </h2>
-                                <div className={"section"}>
-                                    
-    
-                                    <p>Email</p>
-                                    <input
-                                        required
-                                        id="email"
-                                        name="email"
-                                        placeholder={" Email"}
-                                    />
-    
-                                    <p>Password</p>
-                                    <input
-                                        required
-                                        id="password"
-                                        name="password"
-                                        placeholder={" Password"}
-                                    />
-    
-                                    <p>Re-enter Password</p>
-                                    <input
-                                        required
-                                        id="password"
-                                        name="password"
-                                        placeholder={" Password"}
-                                    />
-                                </div>
-                                
-                                <Divider sx={{paddingTop: '10px', border: 'none'}}/>
-    
-                                <IconButton className={"continue-btn"}>
-                                    <ArrowCircleRightIcon className={"continue-btn__icon"}/>
-                                </IconButton>
+                    <FormControl>
+                      <InputLabel>Password</InputLabel>
+                      <Input
+                        required
+                        id="password"
+                        name="password"
+                        placeholder={"Create a good password"}
+                      />
+                      <FormHelperText className={"helper-text"}>
+                        Enter your super secret password
+                      </FormHelperText>
+                    </FormControl>
                     
-                            </Stack>
-                    
-                        </Container>
-                    </Paper>
-                </div>
-            </div>
-        </Container>
-    );
+                    <FormControl>
+                      <InputLabel>Re-enter Password</InputLabel>
+                      <Input
+                        required
+                        id="password"
+                        name="password"
+                        placeholder={"Repeat the good password"}
+                      />
+                      <FormHelperText className={"helper-text"}>
+                        Re-enter your super secret password
+                      </FormHelperText>
+                    </FormControl>
+                  
+                  <Divider sx={{paddingTop: '10px', border: 'none'}}/>
+  
+                  <IconButton className={"continue-btn"} disableRipple>
+                    <CheckCircleOutlinedIcon className={"continue-btn__icon"}/>
+                  </IconButton>
+              </div>
+            </Paper>
+          
+          
+          </div>
+        </div>
+      </FormControl>
+    </div>
+  );
 }
 
 export default Register;

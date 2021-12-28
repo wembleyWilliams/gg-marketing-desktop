@@ -1,4 +1,7 @@
 .register-wrapper {
+  display: flex;
+  align-content: center;
+  justify-content: center;
   height: 100vh;
   width: 100vw;
   overflow: auto;
@@ -7,20 +10,19 @@
 
 .register-container {
   display: grid;
-  width: 100vw;
+  width: 100%;
   grid-template-rows: 10% 78%;
   grid-row-gap: 20px;
   grid-template-areas: "title" "body";
 }
 .register-container__title {
   grid-area: title;
-}
-.register-container__title h1 {
   font-family: canada-type-gibson, sans-serif;
   font-style: normal;
   text-align: center;
   text-transform: uppercase;
   font-weight: bold;
+  padding: 0 2rem;
 }
 @media screen and (min-width: 1025px) {
   .register-container__title h1 {
@@ -28,12 +30,7 @@
   }
 }
 .register-container__title b {
-  font-family: canada-type-gibson, sans-serif;
-  font-style: normal;
   color: #fd553c;
-  font-size: 72px;
-  text-transform: uppercase;
-  font-weight: bold;
 }
 @media screen and (min-width: 1025px) {
   .register-container__title b {
@@ -54,7 +51,11 @@
   grid-area: card;
 }
 .register-container__text {
-  height: 100%;
+  display: grid;
+  height: 540px;
+  width: 300px;
+  padding: 20px;
+  margin: auto;
 }
 .register-container__text b {
   color: #fd553c;
@@ -62,6 +63,7 @@
   font-weight: bold;
 }
 .register-container__text h2 {
+  margin: auto;
   text-align: left;
   font-size: 28px;
 }
@@ -69,22 +71,19 @@
   font-size: 20px;
   font-weight: bolder;
 }
-.register-container__text input {
-  width: 100%;
-  border: none;
+.register-container__text .input {
   border-bottom: 3px solid #fd553c;
-  background-color: #EEE;
-  height: 43px;
 }
 
-.continue-btn {
-  margin-left: 85% !important;
-}
 .continue-btn__icon {
   color: white;
   font-size: 2em !important;
   background: #fd553c;
   border-radius: 50%;
+}
+
+.photo-bubble-wrapper {
+  margin: auto;
 }
 
 .photo-bubble {
@@ -107,6 +106,14 @@
 }
 .photo-bubble__add-bubble__icon {
   fill: #fd553c;
+}
+
+.helper-text {
+  font-family: canada-type-gibson, sans-serif;
+  font-style: normal;
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 10px !important;
+  text-transform: uppercase;
 }
 
 /*# sourceMappingURL=index.css.map */

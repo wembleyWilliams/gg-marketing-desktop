@@ -7,6 +7,9 @@ $max-width-lg: 1200px;
 $min-width-xl: 1201px;
 
 .register-wrapper {
+  display: flex;
+  align-content: center;
+  justify-content: center;
   height: 100vh;
   width: 100vw;
   overflow: auto;
@@ -15,7 +18,7 @@ $min-width-xl: 1201px;
 
 .register-container {
   display: grid;
-  width: 100vw;
+  width: 100%;
   grid-template-rows: 10% 78%;
   grid-row-gap: 20px;
   grid-template-areas:
@@ -25,25 +28,21 @@ $min-width-xl: 1201px;
 
   &__title {
     grid-area: title;
+    font-family: canada-type-gibson, sans-serif;
+    font-style: normal;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 0 2rem;
 
     h1 {
-      font-family: canada-type-gibson, sans-serif;
-      font-style: normal;
-      text-align: center;
-      text-transform: uppercase;
-      font-weight: bold;
       @media screen and (min-width: $min-width-lg){
         font-size: 36px;
       }
     }
 
     b {
-      font-family: canada-type-gibson, sans-serif;
-      font-style: normal;
       color: #fd553c;
-      font-size: 72px;
-      text-transform: uppercase;
-      font-weight: bold;
       @media screen and (min-width: $min-width-lg){
         font-size: 36px;
       }
@@ -69,17 +68,14 @@ $min-width-xl: 1201px;
       grid-area: card;
     }
 
-    p {
-
-    }
-
-    h2 {
-
-    }
   }
 
   &__text {
-    height: 100%;
+    display: grid;
+    height: 540px;
+    width: 300px;
+    padding: 20px;
+    margin: auto;
 
     b {
       color: #fd553c;
@@ -88,6 +84,7 @@ $min-width-xl: 1201px;
     }
 
     h2 {
+      margin: auto;
       text-align: left;
       font-size: 28px;
     }
@@ -95,20 +92,19 @@ $min-width-xl: 1201px;
       font-size: 20px;
       font-weight: bolder;
     }
-    input {
-      width: 100%;
-      border: none;
-      //border-radius: 20px;
+    .input {
+      //width: 100%;
+      //border: none;
+      ////border-radius: 20px;
       border-bottom: 3px solid #fd553c;
-      background-color: #EEE;
-      height: 43px;
+      //background-color: #EEE;
+      ////height: 43px;
     }
 
   }
 }
 
 .continue-btn {
-  margin-left: 85% !important;
 
   &__icon {
     color: white;
@@ -116,6 +112,10 @@ $min-width-xl: 1201px;
     background: #fd553c;
     border-radius: 50%;
   }
+}
+
+.photo-bubble-wrapper {
+  margin: auto;
 }
 
 .photo-bubble {
@@ -144,4 +144,12 @@ $min-width-xl: 1201px;
 
 .section {
 
+}
+
+.helper-text {
+  font-family: canada-type-gibson, sans-serif;
+  font-style: normal;
+  color: rgba(0,0,0,0.3);
+  font-size: 10px !important;
+  text-transform: uppercase;
 }
