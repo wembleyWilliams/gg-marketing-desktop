@@ -1,4 +1,4 @@
-import {ApplicationState, BusinessData} from "../common/types";
+import {ApplicationState} from "../common/types";
 
 const initialState: ApplicationState = {
    businessDetails: null
@@ -12,6 +12,7 @@ export const applicationReducer = (state = initialState, action: any) => {
                 ...state,
                 businessDetails: businessDetails
             };
+            
         default:
             return state;
     }

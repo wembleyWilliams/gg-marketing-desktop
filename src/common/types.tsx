@@ -17,7 +17,21 @@ export interface BusinessData  {
     }]
 }
 
+export interface NewUser {
+    firstname: string,
+    lastname: string,
+    businessName: string,
+    email: string,
+    password: string,
+    password2: string,
+    profilePicture: string
+}
+
 export interface ApplicationState {
     businessDetails: BusinessData;
+}
+
+export interface UserState {
+    newUser: NewUser
 }
 

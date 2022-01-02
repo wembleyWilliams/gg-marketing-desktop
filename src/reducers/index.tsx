@@ -1,11 +1,14 @@
 import {combineReducers} from "redux";
 import applicationReducer from "./applicationReducer";
-import {ApplicationState} from "../common/types";
+import {ApplicationState, UserState} from "../common/types";
+import userReducer from "./userReducer";
 
 export interface State {
     application: ApplicationState
+    newUser: UserState
 }
 
 export default combineReducers({
-    application: applicationReducer
+    application: applicationReducer,
+    newUser: userReducer
 });

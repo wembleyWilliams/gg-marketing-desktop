@@ -22,7 +22,12 @@
   text-align: center;
   text-transform: uppercase;
   font-weight: bold;
-  padding: 0 2rem;
+  margin: auto;
+}
+@media screen and (max-width: 1024px) {
+  .register-container__title {
+    padding: 2rem;
+  }
 }
 @media screen and (min-width: 1025px) {
   .register-container__title h1 {
@@ -39,13 +44,20 @@
 }
 .register-container__body {
   max-width: inherit;
-  padding: 0rem 2rem;
+  padding: 1rem 2rem;
   grid-area: body;
   display: grid;
   align-content: center;
   align-items: center;
   grid-column-gap: 20px;
   grid-template-areas: "card card card";
+}
+@media screen and (max-width: 1024px) {
+  .register-container__body {
+    margin: auto;
+    grid-row-gap: 60px;
+    grid-template-areas: "card" "card" "card";
+  }
 }
 .register-container__body Paper {
   grid-area: card;
@@ -59,13 +71,13 @@
 }
 .register-container__text b {
   color: #fd553c;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
 }
 .register-container__text h2 {
   margin: auto;
   text-align: left;
-  font-size: 28px;
+  font-size: 24px;
 }
 .register-container__text p {
   font-size: 20px;
@@ -92,13 +104,18 @@
   background: #fd553c;
   border-radius: 50%;
 }
+.photo-bubble img {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+}
 .photo-bubble__add-bubble {
   border-radius: 50%;
   background: #FFFFFF;
   border: 1px solid #EEEEEE;
   position: relative;
-  top: 140px;
-  left: 155px;
+  top: 10rem;
+  left: 8rem;
   height: 50px;
   width: 50px;
   display: grid;
@@ -114,6 +131,10 @@
   color: rgba(0, 0, 0, 0.3);
   font-size: 10px !important;
   text-transform: uppercase;
+}
+
+.hide {
+  display: none;
 }
 
 /*# sourceMappingURL=index.css.map */
