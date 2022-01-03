@@ -22,8 +22,8 @@ export interface NewUser {
     lastname: string,
     businessName: string,
     email: string,
-    password: string,
-    password2: string,
+    password: string | null,
+    password2: string | null,
     profilePicture: string
 }
 

@@ -1,12 +1,10 @@
-const express = require("express");
+import express from 'express';
 const router = express.Router();
-
 
 //Login handle
 router.get('/login', (req: any, res: any) => {
 
 })
-
 
 //Register handle
 router.post('/register', (req: any, res: any) => {

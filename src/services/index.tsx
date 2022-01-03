@@ -1,5 +1,8 @@
+
 import "../common/types";
 import axios from "axios";
+import {NewUser} from "../common/types";
+import {hashPassword} from "../utils/hash";
 
 const log = require('loglevel');
 log.setDefaultLevel("INFO")
@@ -9,6 +12,13 @@ log.setDefaultLevel("INFO")
 const url = "https://gg-database-server.herokuapp.com"
 // const url = "http://localhost:7020"
 const services = {
+    
+    registerUser: async (user: NewUser) => {
+    
+        
+    }
+    ,
+    
     //TODO: if business ID is null implement an error page
     getAuthentication: async () => {
         let result: any;

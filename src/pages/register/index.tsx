@@ -17,6 +17,8 @@ import {Add, InputRounded} from "@mui/icons-material";
 import {createStyles, makeStyles} from "@mui/styles";
 import {useDispatch} from "react-redux";
 import {setNewUser} from "../../actions/userActions";
+import {NewUser} from "../../common/types";
+import {hashPassword} from "../../utils/hash";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,25 +52,15 @@ const Register = () => {
   const [password, setPassword] = useState('')
   const [password2, setPassword2] = useState('')
   
-  useEffect(()=>{
-    dispatch(setNewUser(
-      {
-        firstname: firstname,
-        lastname: lastname,
-        businessName: businessName,
-        email: email,
-        password: password,
-        password2: password2,
-        profilePicture: imageFile64
-      }
-    ))
-  },[imageFile64, firstname, lastname,
+  useEffect(() => {
+    //do here on reload
+  }, [imageFile64, firstname, lastname,
     businessName, email, password, password2])
- 
+  
   const handleChange = (event: any) => {
     const name = event.target.name;
     const value = event.target.value;
-    switch (name){
+    switch (name) {
       case 'first-name':
         setFirstname(value)
         break;
@@ -95,7 +87,7 @@ const Register = () => {
     const file = event.target.files[0];
     const reader = new FileReader();
     
-    reader.addEventListener("load", ()=> {
+    reader.addEventListener("load", () => {
       preview.src = reader.result.toString();
       document.getElementById('photo-bubble')
         .style.backgroundImage = `url(${preview.src})`
@@ -106,11 +98,31 @@ const Register = () => {
       reader.readAsDataURL(file);
     }
   }
- 
+  
+  const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    let hashedPassword = await hashPassword(password)
+    let hashedPassword2 = await hashPassword(password2)
+    
+    if(hashedPassword){
+      const user: NewUser = {
+        firstname: firstname,
+        lastname: lastname,
+        businessName: businessName,
+        email: email,
+        password: hashedPassword,
+        password2: hashedPassword2,
+        profilePicture: imageFile64
+      }
+  
+      dispatch(setNewUser(user))
+    }
+    
+  }
   
   return (
     <div className={"register-wrapper"}>
-      <FormControl variant={"filled"}>
+      <form onSubmit={handleSubmit}>
         <div className={"register-container"}>
           <div className={"register-container__title"}>
             <h1><b>Let's</b> Get You Signed Up</h1>
@@ -144,7 +156,7 @@ const Register = () => {
                     Enter your first name here
                   </FormHelperText>
                 </FormControl>
-  
+                
                 <FormControl>
                   <InputLabel>Lastname</InputLabel>
                   <Input
@@ -202,11 +214,13 @@ const Register = () => {
                     <div className={"photo-bubble__add-bubble"}>
                       <IconButton
                         disableRipple
-                        onClick={()=>{document.getElementById('fileUpload').click(); }}
+                        onClick={() => {
+                          document.getElementById('fileUpload').click();
+                        }}
                       >
                         <input
                           accept="image/png, image/jpeg"
-                          onChange={ event => handleImageUpload(event)}
+                          onChange={event => handleImageUpload(event)}
                           id={'fileUpload'}
                           type="file" className={"hide"}/>
                         
@@ -281,8 +295,8 @@ const Register = () => {
                 
                 <Divider sx={{paddingTop: '10px', border: 'none'}}/>
                 
-                <IconButton className={"continue-btn"} disableRipple>
-                  <CheckCircleOutlinedIcon className={"continue-btn__icon"}/>
+                <IconButton className={"continue-btn"} disableRipple type={"submit"}>
+                  <CheckCircleOutlinedIcon id={"checkbutton"} className={"continue-btn__icon"}/>
                 </IconButton>
               </div>
             </Paper>
@@ -290,7 +304,7 @@ const Register = () => {
           
           </div>
         </div>
-      </FormControl>
+      </form>
     </div>
   );
 }
