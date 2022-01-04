@@ -1,7 +1,11 @@
-import {UserState} from "../common/types";
+import {User} from "../common/types";
 
-const initialState: UserState = {
-  newUser: null
+const initialState: User = {
+  firstname: '',
+  lastname: '',
+  businessName: '',
+  email: '',
+  profilePicture: ''
 }
 
 export const userReducer = (state = initialState, action: any) => {
@@ -10,7 +14,7 @@ export const userReducer = (state = initialState, action: any) => {
       const newUserDetails = action.payload
       return {
         ...state,
-        newUser: newUserDetails
+        user: newUserDetails
       };
     
     default:

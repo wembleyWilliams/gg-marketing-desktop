@@ -12,13 +12,15 @@ import {
   Theme
 } from "@mui/material";
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import {Add, InputRounded} from "@mui/icons-material";
 import {createStyles, makeStyles} from "@mui/styles";
 import {useDispatch} from "react-redux";
 import {setNewUser} from "../../actions/userActions";
-import {NewUser} from "../../common/types";
+import {User} from "../../common/types";
 import {hashPassword} from "../../utils/hash";
+import {registrationSchema} from "../../utils/validation";
+import {Formik} from 'formik';
+import SnackbarNotification from "../../components/snackbar-notification/snackbar-notification";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,7 +45,8 @@ const useStyles = makeStyles((theme: Theme) =>
 const Register = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  
+  const [isOpen, setIsOpen] = useState(false)
+  const [hasError, setHasError] = useState(false)
   const [imageFile64, setImageFile64] = useState('')
   const [firstname, setFirstname] = useState('')
   const [lastname, setLastname] = useState('')
@@ -57,30 +60,16 @@ const Register = () => {
   }, [imageFile64, firstname, lastname,
     businessName, email, password, password2])
   
-  const handleChange = (event: any) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    switch (name) {
-      case 'first-name':
-        setFirstname(value)
-        break;
-      case 'last-name':
-        setLastname(value)
-        break;
-      case 'password':
-        setPassword(value)
-        break;
-      case 'password2':
-        setPassword2(value)
-        break;
-      case 'email':
-        setEmail(value)
-        break;
-      case 'business-name':
-        setBusinessname(value)
-        break;
+  const validationSchema = registrationSchema()
+  
+  const handleCloseSnackbar = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
     }
-  }
+
+    setIsOpen(false);
+  };
+  
   
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const preview = document.createElement('img')
@@ -99,213 +88,294 @@ const Register = () => {
     }
   }
   
-  const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    let hashedPassword = await hashPassword(password)
-    let hashedPassword2 = await hashPassword(password2)
+  // const handleFormSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //   let hashedPassword = await hashPassword(password)
+  //   let hashedPassword2 = await hashPassword(password2)
+  //
+  //   if(hashedPassword){
+  //     const user: User = {
+  //       firstname: firstname,
+  //       lastname: lastname,
+  //       businessName: businessName,
+  //       email: email,
+  //       password: hashedPassword,
+  //       password2: hashedPassword2,
+  //       profilePicture: imageFile64
+  //     }
+  //
+  //     dispatch(setNewUser(user))
+  //   }
+  //
+  // }
+  const handleSubmit = (
+    values: any,
+    errors: any
+  ) => {
     
-    if(hashedPassword){
-      const user: NewUser = {
-        firstname: firstname,
-        lastname: lastname,
-        businessName: businessName,
-        email: email,
-        password: hashedPassword,
-        password2: hashedPassword2,
-        profilePicture: imageFile64
-      }
-  
-      dispatch(setNewUser(user))
+    console.log(values)
+    console.log(errors)
+    if(errors.length > 0) {
+      console.log(errors)
+      setIsOpen(true)
     }
-    
+    // let hashedPassword = hashPassword(password)
+    // let hashedPassword2 = hashPassword(password2)
+    //
+    // if(hashedPassword){
+    //   const user: User = {
+    //     firstname: firstname,
+    //     lastname: lastname,
+    //     businessName: businessName,
+    //     email: email,
+    //     password: hashedPassword,
+    //     password2: hashedPassword2,
+    //     profilePicture: imageFile64
+    //   }
+    //
   }
+  
   
   return (
     <div className={"register-wrapper"}>
-      <form onSubmit={handleSubmit}>
-        <div className={"register-container"}>
-          <div className={"register-container__title"}>
-            <h1><b>Let's</b> Get You Signed Up</h1>
-          </div>
-          <div className={"register-container__body"}>
-            
-            {/*Section 1*/}
-            <Paper sx={{
-              borderRadius: "60px",
-              maxWidth: "370px",
-              minWidth: "350px",
-              maxHeight: "580px",
-              minHeight: "560px"
-            }}>
-              <div className={"register-container__text"}>
-                <h2>
-                  <b>Okay</b>, lets get to know you a little
-                  better by giving us your name and company name.
-                </h2>
+      <Formik
+        initialValues={{
+          imageFile64: '',
+          firstname: '',
+          lastname: '',
+          businessName: '',
+          email: '',
+          password: '',
+          password2: '',
+        }}
+        
+        validationSchema={validationSchema}
+        
+        onSubmit={(values, errors) => {
+          handleSubmit(values, errors);
+        }}
+      >
+        {({
+            values,
+            errors,
+            touched,
+            handleSubmit,
+            handleChange,
+          }) => (
+          <form onSubmit={()=>handleSubmit}>
+            <div className={"register-container"}>
+              <div className={"register-container__title"}>
+                <h1><b>Let's</b> Get You Signed Up</h1>
+              </div>
+              <div className={"register-container__body"}>
                 
-                <FormControl>
-                  <InputLabel>Firstname</InputLabel>
-                  <Input
-                    required
-                    id="first-name"
-                    name="first-name"
-                    onChange={event => handleChange(event)}
-                    placeholder={"What's your first name?"}
-                  />
-                  <FormHelperText className={"helper-text"}>
-                    Enter your first name here
-                  </FormHelperText>
-                </FormControl>
+                {/*Section 1*/}
+                <Paper sx={{
+                  borderRadius: "60px",
+                  maxWidth: "370px",
+                  minWidth: "350px",
+                  maxHeight: "580px",
+                  minHeight: "560px"
+                }}>
+                  <div className={"register-container__text"}>
+                    <h2>
+                      <b>Okay</b>, lets get to know you a little
+                      better by giving us your name and company name.
+                    </h2>
+                    
+                    <FormControl>
+                      <InputLabel>Firstname</InputLabel>
+                      <Input
+                        id="firstname"
+                        name="firstname"
+                        value={values.firstname}
+                        onChange={event => handleChange(event)}
+                        placeholder={"What's your first name?"}
+                      />
+                      
+                      <FormHelperText className={touched.firstname && errors.firstname?"helper-text__error":"helper-text"}>
+                        {touched.firstname && errors.firstname ? errors.firstname :
+                          'Enter your first name'}
+                      </FormHelperText>
+                    </FormControl>
+                    
+                    <FormControl>
+                      <InputLabel>Lastname</InputLabel>
+                      <Input
+                        id="lastname"
+                        name="lastname"
+                        value={values.lastname}
+                        onChange={event => handleChange(event)}
+                        placeholder={"What's your last name?"}
+                      />
+                      <FormHelperText className={errors.lastname?"helper-text__error":"helper-text"}>
+                        {touched.lastname && errors.lastname ? errors.lastname :
+                          'Enter your last name'}
+                      </FormHelperText>
+                    </FormControl>
+                    
+                    <FormControl>
+                      <InputLabel>Business Name</InputLabel>
+                      <Input
+                        id="businessName"
+                        name="businessName"
+                        value={values.businessName}
+                        onChange={event => handleChange(event)}
+                        placeholder={"And your business name?"}
+                      />
+                      <FormHelperText className={errors.businessName?"helper-text__error":"helper-text"}>
+                        {touched.businessName && errors.businessName? errors.businessName :
+                        'Enter your business name'}
+                      </FormHelperText>
+                    </FormControl>
+                    
+                    <Divider sx={{paddingTop: '10px', border: 'none'}}/>
+                    
+                    {/*<IconButton className={"continue-btn"} disableRipple>*/}
+                    {/*  <CheckCircleOutlinedIcon className={"continue-btn__icon"}/>*/}
+                    {/*</IconButton>*/}
+                  
+                  </div>
+                </Paper>
                 
-                <FormControl>
-                  <InputLabel>Lastname</InputLabel>
-                  <Input
-                    required
-                    id="last-name"
-                    name="last-name"
-                    onChange={event => handleChange(event)}
-                    placeholder={"What's your last name?"}
-                  />
-                  <FormHelperText className={"helper-text"}>
-                    Enter your last name here
-                  </FormHelperText>
-                </FormControl>
+                {/*Section 2 */}
+                <Paper sx={{
+                  borderRadius: "60px",
+                  maxWidth: "370px",
+                  minWidth: "350px",
+                  maxHeight: "580px",
+                  minHeight: "560px"
+                }}>
+                  <div className={"register-container__text"}>
+                    <h2>
+                      <b>Now</b>, lets see your face or even a logo
+                      for us to know what you want to look like to us.
+                    </h2>
+                    <div className={"photo-bubble-wrapper"}>
+                      <div id={"photo-bubble"} className={"photo-bubble"}>
+                        
+                        {/*//img created here*/}
+                        
+                        <div className={"photo-bubble__add-bubble"}>
+                          <IconButton
+                            disableRipple
+                            onClick={() => {
+                              document.getElementById('fileUpload').click();
+                            }}
+                          >
+                            <input
+                              accept="image/png, image/jpeg"
+                              onChange={event => handleImageUpload(event)}
+                              id={'fileUpload'}
+                              type="file"
+                              className={"hide"}
+                            />
+                            
+                            <Add className={"photo-bubble__add-bubble__icon"}/>
+                          </IconButton>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <Divider sx={{paddingTop: '10px', border: 'none'}}/>
+                    
+                    {/*<IconButton className={"continue-btn"} disableRipple>*/}
+                    {/*  <CheckCircleOutlinedIcon className={"continue-btn__icon"}/>*/}
+                    {/*</IconButton>*/}
+                  </div>
+                </Paper>
                 
-                <FormControl>
-                  <InputLabel>Business Name</InputLabel>
-                  <Input
-                    required
-                    id="business-name"
-                    name="business-name"
-                    onChange={event => handleChange(event)}
-                    placeholder={"And your business name?"}
-                  />
-                  <FormHelperText className={"helper-text"}>
-                    Enter your business's name here
-                  </FormHelperText>
-                </FormControl>
-                
-                <Divider sx={{paddingTop: '10px', border: 'none'}}/>
-                
-                {/*<IconButton className={"continue-btn"} disableRipple>*/}
-                {/*  <CheckCircleOutlinedIcon className={"continue-btn__icon"}/>*/}
-                {/*</IconButton>*/}
+                {/*Section 3*/}
+                <Paper sx={{
+                  borderRadius: "60px",
+                  maxWidth: "370px",
+                  minWidth: "350px",
+                  maxHeight: "580px",
+                  minHeight: "560px"
+                }}>
+                  <div className={"register-container__text"}>
+                    <h2>
+                      <b>Then</b> fill out the rest here
+                    </h2>
+                    <FormControl>
+                      <InputLabel>Email</InputLabel>
+                      <Input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={values.email}
+                        onChange={event => handleChange(event)}
+                        placeholder={"What's your email address?"}
+                      />
+                      <FormHelperText className={errors.email?"helper-text__error":"helper-text"}>
+                        {touched.email && errors.email ? errors.email :
+                          'Enter personal/business email address'}
+                        
+                      </FormHelperText>
+                    </FormControl>
+                    
+                    <FormControl>
+                      <InputLabel>Password</InputLabel>
+                      <Input
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={values.password}
+                        onChange={event => handleChange(event)}
+                        placeholder={"Create a good password"}
+                      
+                      />
+                      <FormHelperText className={errors.password?"helper-text__error":"helper-text"}>
+                        {touched.password && errors.password ? errors.password :
+                          'Enter your super secret password'}
+                      </FormHelperText>
+                    </FormControl>
+                    
+                    <FormControl>
+                      <InputLabel>Re-enter Password</InputLabel>
+                      <Input
+                        type="password"
+                        id="password2"
+                        name="password2"
+                        value={values.password2}
+                        onChange={event => handleChange(event)}
+                        placeholder={"Repeat that good password"}
+                      />
+                      <FormHelperText className={errors.password2?"helper-text__error":"helper-text"}>
+                        {touched.password2 && errors.password2 ? errors.password2 :
+                          'Re-enter your super secret password'}
+                      </FormHelperText>
+                    </FormControl>
+                    
+                    <Divider sx={{paddingTop: '10px', border: 'none'}}/>
+                    
+                    <IconButton className={"continue-btn"} disableRipple type={"submit"}>
+                      <CheckCircleOutlinedIcon id={"checkbutton"} className={"continue-btn__icon"}/>
+                    </IconButton>
+                  </div>
+                </Paper>
               
               </div>
-            </Paper>
-            
-            {/*Section 2 */}
-            <Paper sx={{
-              borderRadius: "60px",
-              maxWidth: "370px",
-              minWidth: "350px",
-              maxHeight: "580px",
-              minHeight: "560px"
-            }}>
-              <div className={"register-container__text"}>
-                <h2>
-                  <b>Now</b>, lets see your face or even a logo
-                  for us to know what you want to look like to us.
-                </h2>
-                <div className={"photo-bubble-wrapper"}>
-                  <div id={"photo-bubble"} className={"photo-bubble"}>
-                    {/*//img created here*/}
-                    
-                    <div className={"photo-bubble__add-bubble"}>
-                      <IconButton
-                        disableRipple
-                        onClick={() => {
-                          document.getElementById('fileUpload').click();
-                        }}
-                      >
-                        <input
-                          accept="image/png, image/jpeg"
-                          onChange={event => handleImageUpload(event)}
-                          id={'fileUpload'}
-                          type="file" className={"hide"}/>
-                        
-                        <Add className={"photo-bubble__add-bubble__icon"}/>
-                      </IconButton>
-                    </div>
-                  </div>
-                </div>
-                
-                <Divider sx={{paddingTop: '10px', border: 'none'}}/>
-                
-                {/*<IconButton className={"continue-btn"} disableRipple>*/}
-                {/*  <CheckCircleOutlinedIcon className={"continue-btn__icon"}/>*/}
-                {/*</IconButton>*/}
-              </div>
-            </Paper>
-            
-            {/*Section 3*/}
-            <Paper sx={{
-              borderRadius: "60px",
-              maxWidth: "370px",
-              minWidth: "350px",
-              maxHeight: "580px",
-              minHeight: "560px"
-            }}>
-              <div className={"register-container__text"}>
-                <h2>
-                  <b>Then</b> fill out the rest here
-                </h2>
-                <FormControl>
-                  <InputLabel>Email</InputLabel>
-                  <Input
-                    required
-                    id="email"
-                    name="email"
-                    onChange={event => handleChange(event)}
-                    placeholder={"What's your email address?"}
-                  />
-                  <FormHelperText className={"helper-text"}>
-                    Enter personal/business email address here.
-                    This email will be used for login and contact purposes.
-                  </FormHelperText>
-                </FormControl>
-                
-                <FormControl>
-                  <InputLabel>Password</InputLabel>
-                  <Input
-                    required
-                    id="password"
-                    name="password"
-                    onChange={event => handleChange(event)}
-                    placeholder={"Create a good password"}
-                  />
-                  <FormHelperText className={"helper-text"}>
-                    Enter your super secret password
-                  </FormHelperText>
-                </FormControl>
-                
-                <FormControl>
-                  <InputLabel>Re-enter Password</InputLabel>
-                  <Input
-                    required
-                    id="password2"
-                    name="password2"
-                    onChange={event => handleChange(event)}
-                    placeholder={"Repeat the good password"}
-                  />
-                  <FormHelperText className={"helper-text"}>
-                    Re-enter your super secret password
-                  </FormHelperText>
-                </FormControl>
-                
-                <Divider sx={{paddingTop: '10px', border: 'none'}}/>
-                
-                <IconButton className={"continue-btn"} disableRipple type={"submit"}>
-                  <CheckCircleOutlinedIcon id={"checkbutton"} className={"continue-btn__icon"}/>
-                </IconButton>
-              </div>
-            </Paper>
-          
-          
-          </div>
-        </div>
-      </form>
+              {(
+                <SnackbarNotification
+                  isOpen={true}
+                  onClose={handleCloseSnackbar}
+                  title="Missing Information"
+                  message="It looks like you forgot to enter a few details.
+    					Please enter the correct information in the
+    					highlighted fields."
+                />
+              )}
+            </div>
+          </form>
+        )}
+        
+      </Formik>
+      
+      
     </div>
+  
+    
   );
 }
 

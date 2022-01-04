@@ -17,13 +17,13 @@ export interface BusinessData  {
     }]
 }
 
-export interface NewUser {
+export interface User {
     firstname: string,
     lastname: string,
     businessName: string,
     email: string,
-    password: string | null,
-    password2: string | null,
+    password?: string | null,
+    password2?: string | null,
     profilePicture: string
 }
 
@@ -31,7 +31,5 @@ export interface ApplicationState {
     businessDetails: BusinessData;
 }
 
-export interface UserState {
-    newUser: NewUser
-}
 
+export type Nullable<T> = T | null | undefined;

@@ -1,7 +1,7 @@
 
 import "../common/types";
 import axios from "axios";
-import {NewUser} from "../common/types";
+import {User} from "../common/types";
 import {hashPassword} from "../utils/hash";
 
 const log = require('loglevel');
@@ -13,7 +13,7 @@ const url = "https://gg-database-server.herokuapp.com"
 // const url = "http://localhost:7020"
 const services = {
     
-    registerUser: async (user: NewUser) => {
+    registerUser: async (user: User) => {
     
         
     }
