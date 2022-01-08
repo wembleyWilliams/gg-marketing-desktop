@@ -27,6 +27,14 @@ export interface User {
     profilePicture: string
 }
 
+export interface UserState {
+    firstname: string,
+    lastname: string,
+    businessName: string,
+    email: string,
+    profilePicture: string
+}
+
 export interface ApplicationState {
     businessDetails: BusinessData;
 }

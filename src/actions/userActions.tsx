@@ -1,6 +1,6 @@
-import {User} from "../common/types";
+import {UserState} from "../common/types";
 
-export const setNewUser = (user: User) => ({
-  type: 'SET_NEW_USER',
+export const setUser = (user: UserState) => ({
+  type: 'SET_USER',
   payload: user
 })

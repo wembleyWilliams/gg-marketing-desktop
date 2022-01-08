@@ -1,6 +1,6 @@
-import {User} from "../common/types";
+import {UserState} from "../common/types";
 
-const initialState: User = {
+const initialState: UserState = {
   firstname: '',
   lastname: '',
   businessName: '',
@@ -10,11 +10,10 @@ const initialState: User = {
 
 export const userReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case "SET_NEW_USER":
-      const newUserDetails = action.payload
+    case "SET_USER":
+      const userDetails = action.payload
       return {
-        ...state,
-        user: newUserDetails
+        userDetails
       };
     
     default:

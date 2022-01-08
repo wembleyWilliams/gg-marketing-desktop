@@ -14,9 +14,10 @@ const SnackbarNotification = (props: Props) => {
   const CustomAlert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref,
-) {
-  return <Alert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+  ) {
+    return <Alert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+  
   return (
     <Snackbar open={props.isOpen} autoHideDuration={6000} onClose={props.onClose}>
       <CustomAlert onClose={props.onClose} severity="success">

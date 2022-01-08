@@ -15,10 +15,10 @@ import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import {Add, InputRounded} from "@mui/icons-material";
 import {createStyles, makeStyles} from "@mui/styles";
 import {useDispatch} from "react-redux";
-import {setNewUser} from "../../actions/userActions";
+import {setUser} from "../../actions/userActions";
 import {User} from "../../common/types";
 import {hashPassword} from "../../utils/hash";
-import {registrationSchema} from "../../utils/validation";
+import {isValidRegistrationForm, registrationSchema} from "../../utils/validation";
 import {Formik} from 'formik';
 import SnackbarNotification from "../../components/snackbar-notification/snackbar-notification";
 
@@ -46,32 +46,21 @@ const Register = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [isOpen, setIsOpen] = useState(false)
-  const [hasError, setHasError] = useState(false)
-  const [imageFile64, setImageFile64] = useState('')
-  const [firstname, setFirstname] = useState('')
-  const [lastname, setLastname] = useState('')
-  const [businessName, setBusinessname] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [password2, setPassword2] = useState('')
+  const [profilePicture, setProfilePicture] = useState('')
   
   useEffect(() => {
     //do here on reload
-  }, [imageFile64, firstname, lastname,
-    businessName, email, password, password2])
-  
-  const validationSchema = registrationSchema()
+  }, [profilePicture])
   
   const handleCloseSnackbar = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
-
     setIsOpen(false);
   };
   
   
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const preview = document.createElement('img')
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -79,8 +68,10 @@ const Register = () => {
     reader.addEventListener("load", () => {
       preview.src = reader.result.toString();
       document.getElementById('photo-bubble')
-        .style.backgroundImage = `url(${preview.src})`
-      setImageFile64(preview.src);
+        .style.backgroundImage = `url(${preview.src})`;
+      document.getElementById('photo-bubble')
+        .style.backgroundPosition='center'
+      setProfilePicture(preview.src);
     }, false)
     
     if (file) {
@@ -88,59 +79,39 @@ const Register = () => {
     }
   }
   
-  // const handleFormSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  //   let hashedPassword = await hashPassword(password)
-  //   let hashedPassword2 = await hashPassword(password2)
-  //
-  //   if(hashedPassword){
-  //     const user: User = {
-  //       firstname: firstname,
-  //       lastname: lastname,
-  //       businessName: businessName,
-  //       email: email,
-  //       password: hashedPassword,
-  //       password2: hashedPassword2,
-  //       profilePicture: imageFile64
-  //     }
-  //
-  //     dispatch(setNewUser(user))
-  //   }
-  //
-  // }
-  const handleSubmit = (
+  
+  const handleBusinessSubmit = (
     values: any,
     errors: any
   ) => {
-    
-    console.log(values)
-    console.log(errors)
-    if(errors.length > 0) {
-      console.log(errors)
+  
+    if (isValidRegistrationForm(errors)) {
       setIsOpen(true)
     }
-    // let hashedPassword = hashPassword(password)
-    // let hashedPassword2 = hashPassword(password2)
-    //
-    // if(hashedPassword){
-    //   const user: User = {
-    //     firstname: firstname,
-    //     lastname: lastname,
-    //     businessName: businessName,
-    //     email: email,
-    //     password: hashedPassword,
-    //     password2: hashedPassword2,
-    //     profilePicture: imageFile64
-    //   }
-    //
+    let hashedPassword = hashPassword(values.password).toString()
+    let hashedPassword2 = hashPassword(values.password2).toString()
+  
+    if (hashedPassword) {
+      const user: User = {
+        firstname: values.firstname,
+        lastname: values.lastname,
+        businessName: values.businessName,
+        email: values.email,
+        password: hashedPassword,
+        password2: hashedPassword2,
+        profilePicture: profilePicture
+      }
+      dispatch(setUser(user))
+    }
   }
   
   
+
   return (
     <div className={"register-wrapper"}>
       <Formik
         initialValues={{
-          imageFile64: '',
+          profilePicture: '',
           firstname: '',
           lastname: '',
           businessName: '',
@@ -149,12 +120,11 @@ const Register = () => {
           password2: '',
         }}
         
-        validationSchema={validationSchema}
-        
-        onSubmit={(values, errors) => {
-          handleSubmit(values, errors);
-        }}
-      >
+        validationSchema={registrationSchema()}
+       
+       onSubmit={(values, errors)=>{
+         handleBusinessSubmit(values, errors)
+       }}>
         {({
             values,
             errors,
@@ -162,7 +132,7 @@ const Register = () => {
             handleSubmit,
             handleChange,
           }) => (
-          <form onSubmit={()=>handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <div className={"register-container"}>
               <div className={"register-container__title"}>
                 <h1><b>Let's</b> Get You Signed Up</h1>
@@ -193,7 +163,8 @@ const Register = () => {
                         placeholder={"What's your first name?"}
                       />
                       
-                      <FormHelperText className={touched.firstname && errors.firstname?"helper-text__error":"helper-text"}>
+                      <FormHelperText
+                        className={touched.firstname && errors.firstname ? "helper-text__error" : "helper-text"}>
                         {touched.firstname && errors.firstname ? errors.firstname :
                           'Enter your first name'}
                       </FormHelperText>
@@ -208,7 +179,8 @@ const Register = () => {
                         onChange={event => handleChange(event)}
                         placeholder={"What's your last name?"}
                       />
-                      <FormHelperText className={errors.lastname?"helper-text__error":"helper-text"}>
+                      <FormHelperText
+                        className={touched.lastname && errors.lastname ? "helper-text__error" : "helper-text"}>
                         {touched.lastname && errors.lastname ? errors.lastname :
                           'Enter your last name'}
                       </FormHelperText>
@@ -223,9 +195,10 @@ const Register = () => {
                         onChange={event => handleChange(event)}
                         placeholder={"And your business name?"}
                       />
-                      <FormHelperText className={errors.businessName?"helper-text__error":"helper-text"}>
-                        {touched.businessName && errors.businessName? errors.businessName :
-                        'Enter your business name'}
+                      <FormHelperText
+                        className={touched.businessName && errors.businessName ? "helper-text__error" : "helper-text"}>
+                        {touched.businessName && errors.businessName ? errors.businessName :
+                          'Enter your business name'}
                       </FormHelperText>
                     </FormControl>
                     
@@ -260,13 +233,15 @@ const Register = () => {
                           <IconButton
                             disableRipple
                             onClick={() => {
-                              document.getElementById('fileUpload').click();
+                              document.getElementById('profilePicture').click();
                             }}
                           >
                             <input
-                              accept="image/png, image/jpeg"
+                              name='profilePicture'
+                              accept="image/png,image/jpeg,image/jpg"
                               onChange={event => handleImageUpload(event)}
-                              id={'fileUpload'}
+                              value={values.profilePicture}
+                              id='profilePicture'
                               type="file"
                               className={"hide"}
                             />
@@ -274,6 +249,12 @@ const Register = () => {
                             <Add className={"photo-bubble__add-bubble__icon"}/>
                           </IconButton>
                         </div>
+                        { errors.profilePicture?
+                          <FormHelperText className={"helper-text__error"}>
+                              Please upload a profile picture
+                          </FormHelperText>
+                        : null}
+                        
                       </div>
                     </div>
                     
@@ -307,10 +288,10 @@ const Register = () => {
                         onChange={event => handleChange(event)}
                         placeholder={"What's your email address?"}
                       />
-                      <FormHelperText className={errors.email?"helper-text__error":"helper-text"}>
+                      <FormHelperText className={touched.email && errors.email ? "helper-text__error" : "helper-text"}>
                         {touched.email && errors.email ? errors.email :
                           'Enter personal/business email address'}
-                        
+                      
                       </FormHelperText>
                     </FormControl>
                     
@@ -325,7 +306,8 @@ const Register = () => {
                         placeholder={"Create a good password"}
                       
                       />
-                      <FormHelperText className={errors.password?"helper-text__error":"helper-text"}>
+                      <FormHelperText
+                        className={touched.password && errors.password ? "helper-text__error" : "helper-text"}>
                         {touched.password && errors.password ? errors.password :
                           'Enter your super secret password'}
                       </FormHelperText>
@@ -341,7 +323,8 @@ const Register = () => {
                         onChange={event => handleChange(event)}
                         placeholder={"Repeat that good password"}
                       />
-                      <FormHelperText className={errors.password2?"helper-text__error":"helper-text"}>
+                      <FormHelperText
+                        className={touched.password2 && errors.password2 ? "helper-text__error" : "helper-text"}>
                         {touched.password2 && errors.password2 ? errors.password2 :
                           'Re-enter your super secret password'}
                       </FormHelperText>
@@ -349,7 +332,8 @@ const Register = () => {
                     
                     <Divider sx={{paddingTop: '10px', border: 'none'}}/>
                     
-                    <IconButton className={"continue-btn"} disableRipple type={"submit"}>
+                    <IconButton className={"continue-btn"}
+                                type={"submit"}>
                       <CheckCircleOutlinedIcon id={"checkbutton"} className={"continue-btn__icon"}/>
                     </IconButton>
                   </div>
@@ -358,28 +342,24 @@ const Register = () => {
               </div>
               {(
                 <SnackbarNotification
-                  isOpen={true}
+                  isOpen={isOpen}
                   onClose={handleCloseSnackbar}
                   title="Missing Information"
                   message="It looks like you forgot to enter a few details.
-    					Please enter the correct information in the
-    					highlighted fields."
+                            Please enter the correct information in the
+                            highlighted fields."
                 />
               )}
             </div>
           </form>
         )}
-        
+      
       </Formik>
-      
-      
     </div>
-  
-    
   );
 }
 
-export default Register;
+export default Register
 
 
 // import * as React from 'react';

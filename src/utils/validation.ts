@@ -1,40 +1,26 @@
-import {Nullable} from "../common/types";
+import {Nullable, User} from "../common/types";
 import * as Yup from 'yup';
 
-export const isValidEmail = (value: string) =>
-  /^([\w-.!#$%&'*+/=?^_`{|}~]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/.test(
-    value
-  );
-
-export const isValidFieldEntry = (value: Nullable<string>): boolean => {
+export const hasError = (value: Nullable<string>): boolean => {
   const trimmedValue = value?.trim();
   
   return (
-    trimmedValue !== undefined &&
-    trimmedValue !== null &&
-    trimmedValue !== "" &&
-    trimmedValue.length < 255
+    trimmedValue === ""
   );
 };
 
 
 export const isValidRegistrationForm = (
-  firstname: string,
-  lastname: string,
-  businessName: string,
-  profilePic: string,
-  email: string,
-  password: string,
-  password2: string
+ errors: User
 ) => {
   return (
-    isValidFieldEntry(firstname) &&
-    isValidFieldEntry(lastname) &&
-    isValidFieldEntry(businessName) &&
-    isValidFieldEntry(profilePic) &&
-    (isValidFieldEntry(email) && isValidEmail(email)) &&
-    isValidFieldEntry(password) &&
-    isValidFieldEntry(password2)
+    hasError(errors.firstname) &&
+    hasError(errors.lastname) &&
+    hasError(errors.businessName) &&
+    hasError(errors.profilePicture) &&
+    hasError(errors.email) &&
+    hasError(errors.password) &&
+    hasError(errors.password2)
   )
   
 }
@@ -59,7 +45,7 @@ export const registrationSchema = () => {
         /^[a-z ,.'-]+$/i,
         'Please enter a valid business name'
       ),
-    profilePic: Yup.string().required(),
+    // profilePicture: Yup.string(),
     email: Yup.string()
       .email('Please enter a valid email address')
       .required('Email is required')
