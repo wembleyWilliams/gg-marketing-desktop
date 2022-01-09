@@ -1,29 +1,29 @@
 import {Nullable, User} from "../common/types";
 import * as Yup from 'yup';
 
-export const hasError = (value: Nullable<string>): boolean => {
-  const trimmedValue = value?.trim();
-  
-  return (
-    trimmedValue === ""
-  );
-};
-
-
-export const isValidRegistrationForm = (
- errors: User
-) => {
-  return (
-    hasError(errors.firstname) &&
-    hasError(errors.lastname) &&
-    hasError(errors.businessName) &&
-    hasError(errors.profilePicture) &&
-    hasError(errors.email) &&
-    hasError(errors.password) &&
-    hasError(errors.password2)
-  )
-  
-}
+// export const hasError = (value: Nullable<string>): boolean => {
+//   const trimmedValue = value?.trim();
+//
+//   return (
+//     trimmedValue === ""
+//   );
+// };
+//
+//
+// export const isValidRegistrationForm = (
+//  errors: User
+// ) => {
+//   return (
+//     hasError(errors.firstname) &&
+//     hasError(errors.lastname) &&
+//     hasError(errors.businessName) &&
+//     hasError(errors.profilePicture) &&
+//     hasError(errors.email) &&
+//     hasError(errors.password) &&
+//     hasError(errors.password2)
+//   )
+//
+// }
 
 export const registrationSchema = () => {
   return Yup.object().shape({

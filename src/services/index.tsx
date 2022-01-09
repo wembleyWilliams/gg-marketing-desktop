@@ -2,22 +2,30 @@
 import "../common/types";
 import axios from "axios";
 import {User} from "../common/types";
-import {hashPassword} from "../utils/hash";
 
 const log = require('loglevel');
 log.setDefaultLevel("INFO")
 
 //TODO: Change URL to .env URL
 // const url = process.env.REACT_SERVER_URL;
-const url = "https://gg-database-server.herokuapp.com"
-// const url = "http://localhost:7020"
+// const url = "https://gg-database-server.herokuapp.com"
+const url = "http://localhost:7020"
 const services = {
     
     registerUser: async (user: User) => {
-    
         
-    }
-    ,
+        let result =
+          axios.post(`${url}/register/user`,
+            {user})
+            .then((res) => {
+                return res.data;
+            })
+            .catch((err) => {
+                log.error(err)
+            })
+        return result;
+        
+    },
     
     //TODO: if business ID is null implement an error page
     getAuthentication: async () => {

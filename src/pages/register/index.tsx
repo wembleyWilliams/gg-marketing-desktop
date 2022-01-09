@@ -16,11 +16,12 @@ import {Add, InputRounded} from "@mui/icons-material";
 import {createStyles, makeStyles} from "@mui/styles";
 import {useDispatch} from "react-redux";
 import {setUser} from "../../actions/userActions";
-import {User} from "../../common/types";
+import {UserState} from "../../common/types";
 import {hashPassword} from "../../utils/hash";
-import {isValidRegistrationForm, registrationSchema} from "../../utils/validation";
+import {registrationSchema} from "../../utils/validation";
 import {Formik} from 'formik';
 import SnackbarNotification from "../../components/snackbar-notification/snackbar-notification";
+import services from "../../services";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,20 +46,11 @@ const useStyles = makeStyles((theme: Theme) =>
 const Register = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const [isOpen, setIsOpen] = useState(false)
   const [profilePicture, setProfilePicture] = useState('')
   
   useEffect(() => {
     //do here on reload
   }, [profilePicture])
-  
-  const handleCloseSnackbar = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setIsOpen(false);
-  };
-  
   
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const preview = document.createElement('img')
@@ -70,7 +62,7 @@ const Register = () => {
       document.getElementById('photo-bubble')
         .style.backgroundImage = `url(${preview.src})`;
       document.getElementById('photo-bubble')
-        .style.backgroundPosition='center'
+        .style.backgroundPosition = 'center'
       setProfilePicture(preview.src);
     }, false)
     
@@ -80,33 +72,34 @@ const Register = () => {
   }
   
   
-  const handleBusinessSubmit = (
-    values: any,
-    errors: any
-  ) => {
-  
-    if (isValidRegistrationForm(errors)) {
-      setIsOpen(true)
-    }
+  const handleBusinessSubmit = async (values: any) => {
+    
+    // if (isValidRegistrationForm(errors)) {
+    //   setIsOpen(true)
+    // }
     let hashedPassword = hashPassword(values.password).toString()
     let hashedPassword2 = hashPassword(values.password2).toString()
-  
+    
     if (hashedPassword) {
-      const user: User = {
+      const user: UserState = {
         firstname: values.firstname,
         lastname: values.lastname,
         businessName: values.businessName,
         email: values.email,
-        password: hashedPassword,
-        password2: hashedPassword2,
         profilePicture: profilePicture
+        
       }
       dispatch(setUser(user))
+  
+      services.
+      registerUser(user)
+        .then((value: any) => {
+          console.log(value)
+        })
     }
+    
   }
   
-  
-
   return (
     <div className={"register-wrapper"}>
       <Formik
@@ -121,10 +114,10 @@ const Register = () => {
         }}
         
         validationSchema={registrationSchema()}
-       
-       onSubmit={(values, errors)=>{
-         handleBusinessSubmit(values, errors)
-       }}>
+        
+        onSubmit={(values) => {
+          handleBusinessSubmit(values)
+        }}>
         {({
             values,
             errors,
@@ -249,12 +242,12 @@ const Register = () => {
                             <Add className={"photo-bubble__add-bubble__icon"}/>
                           </IconButton>
                         </div>
-                        { errors.profilePicture?
+                        {errors.profilePicture ?
                           <FormHelperText className={"helper-text__error"}>
-                              Please upload a profile picture
+                            Please upload a profile picture
                           </FormHelperText>
-                        : null}
-                        
+                          : null}
+                      
                       </div>
                     </div>
                     
@@ -340,16 +333,6 @@ const Register = () => {
                 </Paper>
               
               </div>
-              {(
-                <SnackbarNotification
-                  isOpen={isOpen}
-                  onClose={handleCloseSnackbar}
-                  title="Missing Information"
-                  message="It looks like you forgot to enter a few details.
-                            Please enter the correct information in the
-                            highlighted fields."
-                />
-              )}
             </div>
           </form>
         )}

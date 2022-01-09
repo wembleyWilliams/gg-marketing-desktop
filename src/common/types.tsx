@@ -1,3 +1,4 @@
+//
 export interface BusinessData  {
     _id: string,
     logo: {
@@ -22,8 +23,8 @@ export interface User {
     lastname: string,
     businessName: string,
     email: string,
-    password?: string | null,
-    password2?: string | null,
+    password: string,
+    password2: string,
     profilePicture: string
 }
 
