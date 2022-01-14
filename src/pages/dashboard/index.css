@@ -11,6 +11,12 @@
 }
 .wrapper__container__left-column {
   padding-left: 1rem;
+  margin: auto;
+}
+.wrapper__container__right-column {
+  margin: auto;
+  height: 100%;
+  padding: 2rem;
 }
 
 /*# sourceMappingURL=index.css.map */

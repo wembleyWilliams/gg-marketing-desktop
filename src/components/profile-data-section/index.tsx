@@ -3,7 +3,11 @@ import "./index.scss";
 import {Paper, Stack} from "@mui/material";
 import {Add, AddCircleRounded, Twitter} from "@mui/icons-material";
 
-const ProfileDataSection = () => {
+interface Props {
+    description: string
+}
+
+const ProfileDataSection = (props: Props) => {
     
     return(
         <div className={"data-wrapper"}>
@@ -22,11 +26,7 @@ const ProfileDataSection = () => {
                     <div className={"container__left-column__upload-section-wrapper__upload-section-description"}>
                         <h2>Description</h2>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna aliqua. Magnis dis parturient montes nascetur
-                            ridiculus mus mauris vitae ultricies. Tristique senectus et netus et malesuada fames
-                            ac turpis.
-                            
+                            {props.description}
                         </p>
                     </div>
                 </div>

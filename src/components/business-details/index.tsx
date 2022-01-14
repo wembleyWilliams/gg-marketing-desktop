@@ -13,7 +13,11 @@ import Loading from "../common/loading";
 const log = require('loglevel');
 log.setDefaultLevel("INFO")
 
-const BusinessDetails = () => {
+interface Props {
+    businessId: string
+}
+
+const BusinessDetails = (props: Props) => {
     const dispatch = useDispatch();
     const description = useSelector(
         (state: State) => state.application.businessDetails?.description)
@@ -31,7 +35,7 @@ const BusinessDetails = () => {
     useEffect(() => {
         log.info("Retrieving business data")
         services
-            .getBusiness()
+            .getBusiness(props.businessId)
             .then((res) => {
                 dispatch(setBusinessDetails(res))
                 setCompleted(true)

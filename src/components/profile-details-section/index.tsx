@@ -3,7 +3,13 @@ import "./index.scss";
 import {Grid} from "@mui/material";
 import Header from "../header";
 
-const ProfileDetailsSection = () => {
+interface Props {
+  title: string,
+  name: string,
+  lastlogin?: string
+}
+
+const ProfileDetailsSection = (props: Props) => {
     
     return (
         <div className={"profile-container"}>
@@ -16,8 +22,8 @@ const ProfileDetailsSection = () => {
                 
             </div>
             <div className={"profile-container__text"}>
-                <h2><b>Good Graphics</b></h2>
-                <h4>Matthew James</h4>
+                <h2><b>{props.title}</b></h2>
+                <h4>{props.name}</h4>
                 <p>Last Updated: 12/05/2021</p>
             </div>
         </div>

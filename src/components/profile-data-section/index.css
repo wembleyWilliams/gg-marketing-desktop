@@ -16,7 +16,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: max-content;
-  height: 70vh;
+  height: inherit;
   grid-column-gap: 20px;
   grid-template-areas: "1 2" "3 3";
 }
@@ -47,7 +47,7 @@
   font-size: 20px;
 }
 .container__left-column__upload-section-wrapper__upload-section-description {
-  grid-area: 3;
+  grid-area: 2;
   background-color: white;
   padding: 1rem;
   box-sizing: border-box;

@@ -1,11 +1,14 @@
 .main-body {
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  max-height: 100%;
+  width: 80%;
+  margin: auto;
 }
 
 .background {
   background-image: linear-gradient(#ff9933, #d14545);
+  border-radius: 25px !important;
 }
 
 .business-title {

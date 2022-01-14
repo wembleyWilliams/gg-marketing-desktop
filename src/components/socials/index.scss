@@ -51,7 +51,7 @@
 
     h2 {
       font-weight: 700;
-      font-size: 2.5rem;
+      font-size: 2.1rem;
 
       @media only screen and (max-width: 400px){
         font-size: 2rem;
@@ -60,7 +60,7 @@
 
     p {
       margin-top: -30px;
-      font-size: 1rem;
+      font-size: 0.5rem;
       font-weight: 400;
 
       @media only screen and (max-width: 400px){
@@ -68,8 +68,6 @@
         font-size: 0.8rem;
       }
     }
-
-
 
   }
 }

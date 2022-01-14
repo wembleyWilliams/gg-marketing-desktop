@@ -12,7 +12,7 @@ export interface BusinessData  {
         rating?: Number,
         newFollowers?: Number
     },
-    businessHandles: [{
+    businessHandles?: [{
         profileName?: string,
         profileUrL?: string,
     }]
@@ -23,8 +23,7 @@ export interface User {
     lastname: string,
     businessName: string,
     email: string,
-    password: string,
-    password2: string,
+    password: string | Promise<any>,
     profilePicture: string
 }
 
@@ -39,6 +38,5 @@ export interface UserState {
 export interface ApplicationState {
     businessDetails: BusinessData;
 }
-
 
 export type Nullable<T> = T | null | undefined;

@@ -11,10 +11,13 @@
 
     &__left-column {
       padding-left: 1rem;
+      margin: auto;
     }
 
     &__right-column {
-
+      margin: auto;
+      height: 100%;
+      padding: 2rem;
     }
   }
 }

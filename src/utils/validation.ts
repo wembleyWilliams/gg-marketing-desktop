@@ -25,6 +25,19 @@ import * as Yup from 'yup';
 //
 // }
 
+export const loginSchema = () => {
+  return Yup.object().shape({
+    email: Yup.string()
+      .email('Please enter a valid email address')
+      .required('Email is required')
+      .matches(
+        /^([\w-.!#$%&'*+/=?^_`{|}~]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+      ),
+    password: Yup.string()
+      .required('No password provided')
+  })
+}
+
 export const registrationSchema = () => {
   return Yup.object().shape({
     firstname: Yup.string()

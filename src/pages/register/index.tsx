@@ -16,12 +16,13 @@ import {Add, InputRounded} from "@mui/icons-material";
 import {createStyles, makeStyles} from "@mui/styles";
 import {useDispatch} from "react-redux";
 import {setUser} from "../../actions/userActions";
-import {UserState} from "../../common/types";
+import {User, UserState} from "../../common/types";
 import {hashPassword} from "../../utils/hash";
 import {registrationSchema} from "../../utils/validation";
 import {Formik} from 'formik';
 import SnackbarNotification from "../../components/snackbar-notification/snackbar-notification";
 import services from "../../services";
+import log from "loglevel";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,6 +51,7 @@ const Register = () => {
   
   useEffect(() => {
     //do here on reload
+  
   }, [profilePicture])
   
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,13 +75,9 @@ const Register = () => {
   
   
   const handleBusinessSubmit = async (values: any) => {
-    
-    // if (isValidRegistrationForm(errors)) {
-    //   setIsOpen(true)
-    // }
-    let hashedPassword = hashPassword(values.password).toString()
-    let hashedPassword2 = hashPassword(values.password2).toString()
-    
+   
+    let hashedPassword = await hashPassword(values.password)
+    console.log(hashedPassword)
     if (hashedPassword) {
       const user: UserState = {
         firstname: values.firstname,
@@ -87,14 +85,22 @@ const Register = () => {
         businessName: values.businessName,
         email: values.email,
         profilePicture: profilePicture
-        
       }
+      
+      const verifiedUser: User = {
+        ...user,
+        password: hashedPassword
+      }
+      
       dispatch(setUser(user))
-  
-      services.
-      registerUser(user)
-        .then((value: any) => {
-          console.log(value)
+      
+      services
+        .registerUser(verifiedUser)
+        .then((res) => {
+          return res
+        })
+        .catch((err)=> {
+          log.error(err)
         })
     }
     
@@ -125,7 +131,9 @@ const Register = () => {
             handleSubmit,
             handleChange,
           }) => (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}
+            method={"post"}
+          >
             <div className={"register-container"}>
               <div className={"register-container__title"}>
                 <h1><b>Let's</b> Get You Signed Up</h1>
@@ -343,123 +351,3 @@ const Register = () => {
 }
 
 export default Register
-
-
-// import * as React from 'react';
-// import Avatar from '@mui/material/Avatar';
-// import Button from '@mui/material/Button';
-// import CssBaseline from '@mui/material/CssBaseline';
-// import TextField from '@mui/material/TextField';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
-// import Grid from '@mui/material/Grid';
-// import Box from '@mui/material/Box';
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-// import Typography from '@mui/material/Typography';
-// import Container from '@mui/material/Container';
-// import { createTheme, ThemeProvider } from '@mui/material/styles';
-//
-// function Copyright(props: any) {
-//     return (
-//         <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//             {'Copyright © '}
-//             <Link color="inherit" href="https://mui.com/">
-//                 Good Graphics
-//             </Link>{' '}
-//             {new Date().getFullYear()}
-//             {'.'}
-//         </Typography>
-//     );
-// }
-//
-// const theme = createTheme();
-//
-// const Register = () => {
-//     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-//         event.preventDefault();
-//         const data = new FormData(event.currentTarget);
-//         // eslint-disable-next-line no-console
-//         console.log({
-//             email: data.get('email'),
-//             password: data.get('password'),
-//         });
-//     };
-//
-//     return (
-//         <ThemeProvider theme={theme}>
-//             <Container component="main" maxWidth="xs">
-//                 <CssBaseline />
-//                 <Box
-//                     sx={{
-//                         marginTop: 8,
-//                         display: 'flex',
-//                         flexDirection: 'column',
-//                         alignItems: 'center',
-//                         backgroundColor: 'blue'
-//                     }}
-//                 >
-//                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-//                         <Grid container spacing={2}>
-//                             <Grid item xs={12}>
-//                                 <TextField
-//                                     name="businessName"
-//                                     required
-//                                     fullWidth
-//                                     id="businessName"
-//                                     label="Business Name"
-//                                     autoFocus
-//                                 />
-//                             </Grid>
-//                             <Grid item xs={12}>
-//                                 <TextField
-//                                     required
-//                                     fullWidth
-//                                     id="email"
-//                                     label="Email Address"
-//                                     name="email"
-//                                     autoComplete="email"
-//                                 />
-//                             </Grid>
-//                             <Grid item xs={12}>
-//                                 <TextField
-//                                     required
-//                                     fullWidth
-//                                     name="password"
-//                                     label="Password"
-//                                     type="password"
-//                                     id="password"
-//                                     autoComplete="new-password"
-//                                 />
-//                             </Grid>
-//                             <Grid item xs={12}>
-//                                 <FormControlLabel
-//                                     control={<Checkbox value="allowExtraEmails" color="primary" />}
-//                                     label="I want to receive marketing promotions and updates via email."
-//                                 />
-//                             </Grid>
-//                         </Grid>
-//                         <Button
-//                             type="submit"
-//                             fullWidth
-//                             variant="contained"
-//                             sx={{ mt: 3, mb: 2 }}
-//                         >
-//                             Sign Up
-//                         </Button>
-//                         <Grid container justifyContent="flex-end">
-//                             <Grid item>
-//                                 <Link href="#" variant="body2">
-//                                     Already have an account? Sign in
-//                                 </Link>
-//                             </Grid>
-//                         </Grid>
-//                     </Box>
-//                 </Box>
-//                 <Copyright sx={{ mt: 5 }} />
-//             </Container>
-//         </ThemeProvider>
-//     );
-// }
-//
-// export default Register;
