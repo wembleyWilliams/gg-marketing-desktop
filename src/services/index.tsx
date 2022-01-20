@@ -1,7 +1,7 @@
 import "../common/types";
 import axios from "axios";
 
-import {User} from "../common/types";
+import {UserData} from "../common/types";
 
 const log = require('loglevel');
 log.setDefaultLevel("INFO")
@@ -22,7 +22,7 @@ const services = {
       })
   },
   
-  registerUser: async (user: User) => {
+  registerUser: async (user: UserData) => {
     let result =
       await axios.post(`${url}/user/auth/signup`, user)
         .then((res) => {
@@ -37,17 +37,20 @@ const services = {
   //TODO: if business ID is null implement an error page
   getAuthentication: async (email: string, password: string) => {
     let result =
-    await axios.post(`${url}/user/auth/login`,
-      {
-      email: email,
-      password: password
-      })
-      .then((res)=>{
-        return res;
-      })
-      .catch((err: any)=> {
-        log.error(err)
-      })
+      await axios.post(`${url}/user/auth/login`,
+        {
+          email: email,
+          password: password
+        }
+        // ,
+        // { withCredentials: true}
+        )
+        .then((res) => {
+          return res.data;
+        })
+        .catch((err: any) => {
+          log.error(err)
+        })
     return result;
   },
   

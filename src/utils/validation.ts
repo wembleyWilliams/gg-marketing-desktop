@@ -1,4 +1,4 @@
-import {Nullable, User} from "../common/types";
+import {Nullable, UserData} from "../common/types";
 import * as Yup from 'yup';
 
 // export const hasError = (value: Nullable<string>): boolean => {

@@ -1,6 +1,6 @@
-import {UserState} from "../common/types";
+import {UserData} from "../common/types";
 
-const initialState: UserState = {
+const initialState: UserData = {
   firstname: '',
   lastname: '',
   businessName: '',

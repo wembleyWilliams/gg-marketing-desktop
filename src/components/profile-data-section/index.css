@@ -67,8 +67,10 @@
 .container__right-column {
   grid-area: right-column;
   display: grid;
+  max-width: 180px;
 }
 .container__right-column__social-box {
+  height: 60px;
   display: grid;
   padding: 0rem 1rem;
   grid-template-columns: repeat(2, 1fr);
@@ -81,6 +83,13 @@
 }
 .container__right-column__social-box__text {
   grid-area: text;
+  font-size: 1vw;
+  margin: auto;
+}
+@media screen and (min-width: 768px) {
+  .container__right-column__social-box__text {
+    font-size: 10px;
+  }
 }
 
 /*# sourceMappingURL=index.css.map */

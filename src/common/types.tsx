@@ -13,26 +13,27 @@ export interface BusinessData  {
         newFollowers?: Number
     },
     businessHandles?: [{
-        profileName?: string,
-        profileUrL?: string,
-    }]
+        socialMedia: string,
+        profileName: string,
+        profileUrL: string,
+    }],
+    businessId: string
 }
 
-export interface User {
+
+
+export interface UserData {
     firstname: string,
     lastname: string,
     businessName: string,
     email: string,
-    password: string | Promise<any>,
-    profilePicture: string
+    password?: string | Promise<any>,
+    profilePicture: string,
+    businessId?: string
 }
 
 export interface UserState {
-    firstname: string,
-    lastname: string,
-    businessName: string,
-    email: string,
-    profilePicture: string
+  userDetails: UserData
 }
 
 export interface ApplicationState {

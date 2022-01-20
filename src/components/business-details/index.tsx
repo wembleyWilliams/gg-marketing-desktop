@@ -30,26 +30,14 @@ const BusinessDetails = (props: Props) => {
     const businessHandles = useSelector(
         (state: State) => state.application.businessDetails?.businessHandles)
     
-    const [completed, setCompleted] = useState(undefined);
+    // const [completed, setCompleted] = useState(undefined);
     
-    useEffect(() => {
-        log.info("Retrieving business data")
-        services
-            .getBusiness(props.businessId)
-            .then((res) => {
-                dispatch(setBusinessDetails(res))
-                setCompleted(true)
-            })
-            .catch((err) => {
-                log.error(err)
-            })
-    }, [])
     
     return (
         <>
-            {!completed ? (
-                <Loading/>
-            ) : (
+            {/*{!completed ? (*/}
+            {/*    <Loading/>*/}
+            {/*) : (*/}
                 <Container maxWidth={"xs"} className={"background"}>
                     <Stack spacing={-3} className={"main-body"}>
                         <Header image={`data:${logoMime};base64,${logoData}`}/>
@@ -64,7 +52,7 @@ const BusinessDetails = (props: Props) => {
                         </Stack>
                     </Stack>
                 </Container>
-            )}
+            {/*)}*/}
         </>
     );
 }

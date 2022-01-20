@@ -6,8 +6,10 @@ import {Formik} from 'formik';
 import services from "../../services";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-
+import {useDispatch} from "react-redux";
+import {setUser} from "../../actions/userActions";
 const Login = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isComplete, setIsComplete] = useState(false);
   
@@ -21,6 +23,8 @@ const Login = () => {
       .then((res)=>{
         if(res){
           setIsComplete(true)
+          dispatch(setUser(res))
+          console.log(res)
           navigate('/dashboard');
         } else {
           setIsComplete(false)

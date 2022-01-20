@@ -16,7 +16,7 @@ import {Add, InputRounded} from "@mui/icons-material";
 import {createStyles, makeStyles} from "@mui/styles";
 import {useDispatch} from "react-redux";
 import {setUser} from "../../actions/userActions";
-import {User, UserState} from "../../common/types";
+import {UserData, UserState} from "../../common/types";
 import {hashPassword} from "../../utils/hash";
 import {registrationSchema} from "../../utils/validation";
 import {Formik} from 'formik';
@@ -79,17 +79,19 @@ const Register = () => {
     let hashedPassword = await hashPassword(values.password)
     console.log(hashedPassword)
     if (hashedPassword) {
-      const user: UserState = {
+      const user: UserData = {
         firstname: values.firstname,
         lastname: values.lastname,
         businessName: values.businessName,
         email: values.email,
-        profilePicture: profilePicture
+        profilePicture: profilePicture,
+        businessId: '6179b92ff2091343c07d34ba'
       }
       
-      const verifiedUser: User = {
+      const verifiedUser: UserData = {
         ...user,
         password: hashedPassword
+        
       }
       
       dispatch(setUser(user))
