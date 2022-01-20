@@ -62,11 +62,11 @@ const ProfileDataSection = (props: Props) => {
                 <h2>ADD</h2>
               </div>
             </Paper>
+            {/*Generated handles*/}
             {businessHandles.map((value: any, index: number) => (
               <React.Fragment key={index}>
                 <Paper className={"container__right-column__social-box"}>
                   <div className={"container__right-column__social-box__icon"}>
-                {/*/!*   //TODO: Replace hardcoded string with businessHandles.map.value.icon*!/*/}
                     {handleGenerator(value.socialMedia)}
                   </div>
                   <div className={"container__right-column__social-box__text"}>
@@ -75,6 +75,7 @@ const ProfileDataSection = (props: Props) => {
                 </Paper>
               </React.Fragment>
             ))}
+            
           </Stack>
         </div>
       </div>

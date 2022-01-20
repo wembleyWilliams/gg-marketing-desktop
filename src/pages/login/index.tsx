@@ -23,13 +23,11 @@ const Login = () => {
       .then((res)=>{
         if(res){
           setIsComplete(true)
-          dispatch(setUser(res))
-          console.log(res)
+          dispatch(setUser(res.user))
           navigate('/dashboard');
         } else {
           setIsComplete(false)
         }
-        console.log(isComplete)
       })
   }
   
