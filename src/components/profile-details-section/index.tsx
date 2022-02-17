@@ -6,7 +6,7 @@ import Header from "../header";
 interface Props {
   title: string,
   name: string,
-  lastlogin?: string
+  lastLogin?: string
 }
 
 const ProfileDetailsSection = (props: Props) => {

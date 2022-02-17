@@ -59,13 +59,13 @@ const Dashboard = () => {
                   name={`${firstname} ${lastname}`}
                 />
               </Grid>
+              
               <Grid item>
                 <ProfileDataSection
                   description={description}
                 />
               </Grid>
             </Grid>
-            
             
             <Grid container item xs={6} className={"wrapper__container__right-column"}>
               <BusinessDetails businessId={businessId}/>

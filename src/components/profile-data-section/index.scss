@@ -55,13 +55,17 @@
         grid-area: 2;
         background-color: white;
         padding: 1rem;
-
         box-sizing: border-box;
-        margin: 30px auto 0 auto;
+        margin: 30px auto 10px auto;
         border-radius: 20px;
-
         text-align: center;
         border: 1px solid #EEEEEE;
+        max-height: 320px;
+        max-width: 280px;
+        overflow: hidden;
+        overflow-y: hidden;
+        overflow-y: scroll;
+        scrollbar-width: none;
       }
 
       &__upload-section-description p {
@@ -81,6 +85,11 @@
     grid-area: right-column;
     display: grid;
     max-width: 180px;
+    max-height: 400px;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding: 1rem 1rem;
+    scrollbar-width: none;
     &__social-box {
       height: 60px;
       display: grid;

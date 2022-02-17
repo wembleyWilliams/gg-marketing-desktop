@@ -38,6 +38,18 @@ export const loginSchema = () => {
   })
 }
 
+export const socialMediaSelectSchema = () => {
+  return Yup.object().shape({
+    handle: Yup.string()
+      .required('Handle is required'),
+    profileUrl: Yup.string()
+      .required('No profile URL provided')
+      .matches(
+        /^[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+      )
+  })
+}
+
 export const registrationSchema = () => {
   return Yup.object().shape({
     firstname: Yup.string()

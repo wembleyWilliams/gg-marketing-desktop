@@ -2,8 +2,9 @@ import React from "react";
 import {
   Facebook,
   Instagram, LinkedIn,
-  Twitter
+  Twitter, YouTube, InsertLink
 } from "@mui/icons-material";
+// import SnapchatGhost from "@emotion-icons/fa-brands/SnapchatGhost"
 
 const handleGenerator = (handleName: string) => {
   switch(handleName){
@@ -19,6 +20,15 @@ const handleGenerator = (handleName: string) => {
     case 'LinkedIn':
       return <><LinkedIn fontSize={'large'}/></>
      break;
+    // case 'Snapchat':
+    //   return <><SnapchatGhost/></>
+    //   break;
+    case 'YouTube':
+      return <><YouTube fontSize={'large'}/></>
+      break;
+    default:
+      return <><InsertLink fontSize={'large'}/></>
+      break;
   }
 }
 

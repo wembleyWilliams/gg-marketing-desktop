@@ -1,6 +1,35 @@
-.wrapper {
-  height: 20vh;
-  width: 20vw;
-  margin: auto;
+.modal-wrapper {
+  width: 400px;
+  height: 400px;
+  background-color: aliceblue;
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 20vh auto auto;
+}
 
+.modal-container {
+  width: inherit;
+  height: inherit;
+
+  h1 {
+    text-align: center;
+  }
+  &__body{
+    display: flex;
+    height: inherit;
+    width: inherit;
+    -ms-overflow-style: none;
+  }
+
+  &__tiles {
+    text-align: center;
+    min-width: 100px;
+    max-width: 160px;
+
+    &__icons {
+      margin: auto;
+      text-align: center;
+      transform: scale(1.7);
+    }
+  }
 }

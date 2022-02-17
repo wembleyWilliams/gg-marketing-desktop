@@ -2,6 +2,9 @@
   background-color: #fd5d5d !important;
   border-radius: 35px !important;
   color: white !important;
+  max-height: 300px;
+  overflow-y: scroll !important;
+  scrollbar-width: none;
 }
 .socials_card__title {
   text-align: center;
@@ -28,19 +31,31 @@
 .socials_card__handles-wrapper__container__button {
   color: white !important;
 }
-.socials_card__handles-wrapper__container h4 {
+.socials_card__handles-wrapper__container p {
   text-align: left;
+  font-size: 16px;
+}
+@media only screen and (max-width: 400px) {
+  .socials_card__handles-wrapper__container p {
+    font-weight: bold;
+    font-size: 14px;
+  }
 }
 .socials_card__handles-wrapper__container__icon {
   transform: scale(2);
   padding-left: 20px;
+}
+@media only screen and (max-width: 400px) {
+  .socials_card__handles-wrapper__container__icon {
+    transform: scale(1);
+  }
 }
 .socials_card__numbers-section {
   text-align: center;
 }
 .socials_card__numbers-section h2 {
   font-weight: 700;
-  font-size: 2.1rem;
+  font-size: 2.5rem;
 }
 @media only screen and (max-width: 400px) {
   .socials_card__numbers-section h2 {
@@ -49,7 +64,7 @@
 }
 .socials_card__numbers-section p {
   margin-top: -30px;
-  font-size: 0.5rem;
+  font-size: 1rem;
   font-weight: 400;
 }
 @media only screen and (max-width: 400px) {

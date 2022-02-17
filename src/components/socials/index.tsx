@@ -6,30 +6,18 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import "./index.scss";
 import {useSelector} from "react-redux";
 import {State} from "../../reducers";
+import InsertLink from "@mui/icons-material/InsertLink";
 
 const log = require('loglevel');
 log.setDefaultLevel("INFO")
 
 const Socials = () => {
-    // const totalFollowers = useSelector(
-    //     (state: State) =>
-    //         state.application.businessDetails?.socialData?.totalFollowers
-    // )
-    // const rating = useSelector(
-    //     (state: State) =>
-    //         state.application.businessDetails?.socialData?.rating
-    // )
-    // const newFollowers = useSelector(
-    //     (state: State) =>
-    //         state.application.businessDetails?.socialData?.newFollowers
-    // )
     
     const businessHandles: any[] = useSelector(
         (state: State) =>
             state.application.businessDetails?.businessHandles.map(val => val)
     )
     
-    log.info(businessHandles)
     //TODO: Replace with an actual loading animation
     const loading = () => <div>it a load me g</div>
     
@@ -46,7 +34,9 @@ const Socials = () => {
             return <FacebookIcon
                 className={"socials_card__handles-wrapper__container__icon"}
             />
-        }
+        } else return <InsertLink
+          className={"socials_card__handles-wrapper__container__icon"}
+        />
         
     }
     
@@ -54,27 +44,6 @@ const Socials = () => {
         <>
             <Card className={"socials_card"} data-testid={"socials-card"}>
                 <CardContent>
-                    {/*<h2 className={"socials_card__title"}>OUR SOCIALS</h2>*/}
-                    {/*<Grid container*/}
-                    {/*      maxWidth={"sm"}*/}
-                    {/*      className={"socials_card__numbers-section"}*/}
-                    {/*      alignContent={"center"} justifyContent={"center"}*/}
-                    {/*      columnSpacing={3}*/}
-                    {/*>*/}
-                    {/*    <Grid item>*/}
-                    {/*        <h2>{totalFollowers}</h2>*/}
-                    {/*        <p>Total Followers</p>*/}
-                    {/*    </Grid>*/}
-                    {/*    <Grid item>*/}
-                    {/*        <h2>{rating}</h2>*/}
-                    {/*        <p>Rating</p>*/}
-                    {/*    */}
-                    {/*    </Grid>*/}
-                    {/*    <Grid item>*/}
-                    {/*        <h2>{newFollowers}</h2>*/}
-                    {/*        <p>New Followers</p>*/}
-                    {/*    </Grid>*/}
-                    {/*</Grid>*/}
                     <Grid container
                           className={"socials_card__tag-grid"}
                           maxWidth={"xs"}

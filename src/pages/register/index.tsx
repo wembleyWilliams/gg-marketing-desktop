@@ -75,7 +75,7 @@ const Register = () => {
   
   
   const handleBusinessSubmit = async (values: any) => {
-   
+    //TODO: Remove static businessId and replace with a user entered businessID
     let hashedPassword = await hashPassword(values.password)
     console.log(hashedPassword)
     if (hashedPassword) {
