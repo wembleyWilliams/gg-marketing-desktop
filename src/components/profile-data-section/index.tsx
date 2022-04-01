@@ -2,20 +2,21 @@ import React, {useEffect, useState} from "react";
 import "./index.scss";
 import {Paper, Stack} from "@mui/material";
 import {Add, AddCircleRounded, Twitter} from "@mui/icons-material";
-// import HandleButtons from "../handle-buttons";
-import handleButtons from "../handle-buttons";
 import handleGenerator from "../../utils/handleGenerator";
 import {useSelector} from "react-redux";
 import {State} from "../../reducers";
 import SocialMediaModal from "../common/social-media-modal";
+import services from "../../services";
+import {Logo} from "../../common/types";
 
 interface Props {
   description: string,
 }
 
 const ProfileDataSection = (props: Props) => {
-  const businessHandles: [{ socialMedia: string; profileName: string; profileUrL: string }] = useSelector(
+  const businessHandles: [{ socialMedia: string; profileName: string; profileUrl: string }] = useSelector(
     (state: State) => state.application.businessDetails?.businessHandles)
+  const businessId = useSelector((state: State) => state.application.businessDetails?._id)
   const [open, setOpen] = useState(false)
   
   useEffect(()=>{
@@ -30,6 +31,28 @@ const ProfileDataSection = (props: Props) => {
     setOpen(false)
   }
   
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        let logo = reader.result.toString()
+        let logoMime = logo.slice(5, 14);
+        let temp = logo.split(',');
+        let logoData = temp[1]
+        
+        let logoObject: Logo = {
+          mime: logoMime,
+          data: logoData
+        }
+        
+        services.updateBusinessLogo(businessId, logoObject)
+        
+      }, false)
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+  }
+  
   return (
     <div className={"data-wrapper"}>
       <div className={"container"}>
@@ -38,7 +61,18 @@ const ProfileDataSection = (props: Props) => {
           <div className={"container__left-column__upload-section-wrapper"}>
             <div className={"container__left-column__upload-section-wrapper__upload-section-icon"}>
               <div className={"container__left-column__upload-section-wrapper__icon-background"}>
-                <Add/>
+                <Add onClick={ () => {
+                  document.getElementById('pictureUpload').click();
+                }}
+                />
+                <input
+                  name='pictureUpload'
+                  accept="image/png,image/jpeg,image/jpg"
+                  onChange={event => handleImageUpload(event)}
+                  id='pictureUpload'
+                  type="file"
+                  className={"hide"}
+                  />
               </div>
             </div>
             <div className={"container__left-column__upload-section-wrapper__upload-section-text"}>

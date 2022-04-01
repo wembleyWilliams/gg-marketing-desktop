@@ -15,12 +15,16 @@ export interface BusinessData  {
     businessHandles?: [{
         socialMedia: string,
         profileName: string,
-        profileUrL: string,
+        profileUrl: string,
     }],
     businessId: string
 }
 
-
+export type businessHandle = {
+    profileName: string,
+    profileUrL: string,
+    socialMedia: string
+}
 
 export interface UserData {
     firstname: string,
@@ -38,6 +42,11 @@ export interface UserState {
 
 export interface ApplicationState {
     businessDetails: BusinessData;
+}
+
+export interface Logo {
+    data: string,
+    mime: string
 }
 
 export type Nullable<T> = T | null | undefined;

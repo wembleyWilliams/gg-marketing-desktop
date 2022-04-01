@@ -1,14 +1,14 @@
 import "../common/types";
 import axios from "axios";
 
-import {UserData} from "../common/types";
+import {businessHandle, Logo, UserData} from "../common/types";
 
 const log = require('loglevel');
 log.setDefaultLevel("INFO")
 
 //TODO: Change URL to .env URL
 // const url = process.env.REACT_SERVER_URL;
-// const url = "https://gg-database-server.herokuapp.com"
+// const url = "https://gg-card-server.herokuapp.com"
 const url = "http://localhost:7020"
 const services = {
   checkForServer: async () => {
@@ -54,6 +54,21 @@ const services = {
     return result;
   },
   
+  updateBusinessLogo: async (businessId: string, logo: Logo) =>{
+    let result: any;
+    
+    result =
+      axios.post(`${url}/business/update/logo/${businessId}`,
+        {logo})
+        .then((res) => {
+          return res.data;
+        })
+        .catch((err: any) => {
+          log.error(err)
+        })
+    return result
+  },
+  
   getBusiness: async (businessId: string) => {
     let result: any;
     result =
@@ -69,6 +84,18 @@ const services = {
   createBusiness: async () => {
   },
   updateBusiness: async (businessId: number) => {
+  },
+  updateBusinessHandles: async (businessId: any, handle: businessHandle) =>{
+    let result: any;
+    result =
+      axios.post(`${url}/business/update/${businessId}`,
+        { handle })
+        .then((res)=>{
+          return res.data;
+        })
+        .catch((err) => {
+          log.error(err)
+        })
   },
   deleteBusiness: async (businessId: number) => {
   }

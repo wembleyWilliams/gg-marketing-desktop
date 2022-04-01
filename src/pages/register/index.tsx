@@ -262,10 +262,6 @@ const Register = () => {
                     </div>
                     
                     <Divider sx={{paddingTop: '10px', border: 'none'}}/>
-                    
-                    {/*<IconButton className={"continue-btn"} disableRipple>*/}
-                    {/*  <CheckCircleOutlinedIcon className={"continue-btn__icon"}/>*/}
-                    {/*</IconButton>*/}
                   </div>
                 </Paper>
                 
