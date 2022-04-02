@@ -11,12 +11,14 @@ import {Logo, businessHandle} from "../../common/types";
 
 interface Props {
   description: string,
+  title?: string
 }
 
 const ProfileDataSection = (props: Props) => {
   const businessHandles: [businessHandle] = useSelector(
     (state: State) => state.application.businessDetails?.businessHandles)
   const businessId = useSelector((state: State) => state.application.businessDetails?._id)
+  const title = useSelector((state: State) => state.application.businessDetails?.title)
   const [open, setOpen] = useState(false)
   
   useEffect(()=>{
@@ -86,6 +88,12 @@ const ProfileDataSection = (props: Props) => {
             <h2>Description</h2>
             <p>
               {props.description}
+            </p>
+          </div>
+          <div className={"container__left-column__upload-section-wrapper__upload-section-title"}>
+            <h2>Card Title/Name</h2>
+            <p>
+              {title}
             </p>
           </div>
         </div>

@@ -46,8 +46,24 @@
   margin: auto;
   font-size: 20px;
 }
-.container__left-column__upload-section-wrapper__upload-section-description {
+.container__left-column__upload-section-wrapper__upload-section-title {
   grid-area: 2;
+  background-color: white;
+  padding: 1rem;
+  box-sizing: border-box;
+  margin: 30px auto 10px auto;
+  border-radius: 20px;
+  text-align: center;
+  border: 1px solid #EEEEEE;
+  max-height: 320px;
+  max-width: 280px;
+  overflow: hidden;
+  overflow-y: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+.container__left-column__upload-section-wrapper__upload-section-description {
+  grid-area: 3;
   background-color: white;
   padding: 1rem;
   box-sizing: border-box;
