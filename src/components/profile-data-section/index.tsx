@@ -7,14 +7,14 @@ import {useSelector} from "react-redux";
 import {State} from "../../reducers";
 import SocialMediaModal from "../common/social-media-modal";
 import services from "../../services";
-import {Logo} from "../../common/types";
+import {Logo, businessHandle} from "../../common/types";
 
 interface Props {
   description: string,
 }
 
 const ProfileDataSection = (props: Props) => {
-  const businessHandles: [{ socialMedia: string; profileName: string; profileUrl: string }] = useSelector(
+  const businessHandles: [businessHandle] = useSelector(
     (state: State) => state.application.businessDetails?.businessHandles)
   const businessId = useSelector((state: State) => state.application.businessDetails?._id)
   const [open, setOpen] = useState(false)
@@ -44,8 +44,11 @@ const ProfileDataSection = (props: Props) => {
           mime: logoMime,
           data: logoData
         }
-        
-        services.updateBusinessLogo(businessId, logoObject)
+        services
+          .updateBusinessLogo(businessId, logoObject)
+          .then((res)=>{
+            console.log(res)
+          })
         
       }, false)
       if (file) {

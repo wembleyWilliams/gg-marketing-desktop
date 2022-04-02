@@ -22,7 +22,7 @@ export interface BusinessData  {
 
 export type businessHandle = {
     profileName: string,
-    profileUrL: string,
+    profileUrl: string,
     socialMedia: string
 }
 

@@ -2,7 +2,7 @@
   background-color: #fd5d5d !important;
   border-radius: 35px !important;
   color: white !important;
-  max-height: 240px;
+  max-height: 400px;
   overflow-y: scroll !important;
   scrollbar-width: none;
 }
