@@ -42,10 +42,11 @@ const ProfileDataSection = (props: Props) => {
         let temp = logo.split(',');
         let logoData = temp[1]
         
-        let logoObject: Logo = {
+        let logoObject: any = {
           mime: logoMime,
           data: logoData
         }
+        
         services
           .updateBusinessLogo(businessId, logoObject)
           .then((res)=>{

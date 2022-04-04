@@ -54,12 +54,11 @@ const services = {
     return result;
   },
   
-  updateBusinessLogo: async (businessId: string, logo: Logo) =>{
+  updateBusinessLogo: async (businessId: string, logo: any) =>{
     let result: any;
-    
     result =
       axios.post(`${url}/business/update/logo/${businessId}`,
-        {logo})
+        logo)
         .then((res) => {
           return res.data;
         })
