@@ -50,7 +50,10 @@ const ProfileDataSection = (props: Props) => {
         services
           .updateBusinessLogo(businessId, logoObject)
           .then((res)=>{
-            console.log(res)
+            if(res){
+              //TODO: To be replace with the state update of Business Details Comp
+              window.location.reload()
+            }
           })
         
       }, false)
