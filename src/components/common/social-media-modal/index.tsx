@@ -152,15 +152,6 @@ const SocialMediaModal = (props: Props) => {
     setLocalIsOpen(false)
   }
   
-  // const handleTileBack = (event: any) => {
-  //   setSelectedSocialMedia(null)
-  //   setLocalIsOpen(false)
-  //
-  // }
-  
-  // open={(props.isOpen && !localIsOpen)
-  //   ? localIsOpen : props.isOpen }
-  
   return (
     <Modal
       open={props.isOpen}
@@ -257,8 +248,7 @@ const SocialMediaModal = (props: Props) => {
               
               
               {localHandles.map((value: any, index: number) => (
-                <Grid item className={classes.gridItem} key={index}
-                >
+                <Grid item className={classes.gridItem} key={index}>
                   <Paper onClick={event => handleClick(event, value.socialMedia)} className={classes.paper}>
                     
                     <div className={classes.paperContent}>

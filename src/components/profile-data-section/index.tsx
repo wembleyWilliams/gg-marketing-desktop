@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "./index.scss";
-import {Paper, Stack} from "@mui/material";
+import {Box, Grid, Paper, Stack} from "@mui/material";
 import {Add, AddCircleRounded, Twitter} from "@mui/icons-material";
 import handleGenerator from "../../utils/handleGenerator";
 import {useSelector} from "react-redux";
@@ -8,11 +8,37 @@ import {State} from "../../reducers";
 import SocialMediaModal from "../common/social-media-modal";
 import services from "../../services";
 import {Logo, businessHandle} from "../../common/types";
+import {makeStyles} from "@mui/styles";
+import HandleGenerator from "../../utils/handleGenerator";
 
 interface Props {
   description: string,
   title?: string
 }
+
+const useStyles = makeStyles({
+  handleBody: {
+    textAlign: "center",
+    justifySelf: "center",
+  },
+  sMHText: {
+    textOverflow: "ellipsis",
+    fontSize: 18,
+    fontWeight: 700
+  },
+  sMHBackgroundPaper: {
+    display: "flex",
+    alignItems: "center",
+    height: 80,
+    borderRadius: 20,
+    margin: "auto",
+    justifyContent: "center",
+    paddingBottom: "10px"
+  },
+  sMHBackgroundGrid: {
+    margin: "auto",
+  }
+})
 
 const ProfileDataSection = (props: Props) => {
   const businessHandles: [businessHandle] = useSelector(
@@ -20,10 +46,18 @@ const ProfileDataSection = (props: Props) => {
   const businessId = useSelector((state: State) => state.application.businessDetails?._id)
   const title = useSelector((state: State) => state.application.businessDetails?.title)
   const [open, setOpen] = useState(false)
+  const [openSocialMediaListItemModal, setOpenSocialMediaListItemModal] = useState(false)
+  const classes = useStyles();
   
-  useEffect(()=>{
   
-  },[open])
+  useEffect(() => {
+  
+  }, [open, openSocialMediaListItemModal])
+  
+  const handleSocialMediaListItemModal = (event: any, index: number) => {
+    setOpenSocialMediaListItemModal(true)
+    console.log(index)
+  }
   
   const handleSocialMediaModal = () => {
     setOpen(true)
@@ -34,32 +68,32 @@ const ProfileDataSection = (props: Props) => {
   }
   
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.addEventListener("load", () => {
-        let logo = reader.result.toString()
-        let logoMime = logo.slice(5, 14);
-        let temp = logo.split(',');
-        let logoData = temp[1]
-        
-        let logoObject: any = {
-          mime: logoMime,
-          data: logoData
-        }
-        
-        services
-          .updateBusinessLogo(businessId, logoObject)
-          .then((res)=>{
-            if(res){
-              //TODO: To be replace with the state update of Business Details Comp
-              window.location.reload()
-            }
-          })
-        
-      }, false)
-      if (file) {
-        reader.readAsDataURL(file);
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      let logo = reader.result.toString()
+      let logoMime = logo.slice(5, 14);
+      let temp = logo.split(',');
+      let logoData = temp[1]
+      
+      let logoObject: any = {
+        mime: logoMime,
+        data: logoData
       }
+      
+      services
+        .updateBusinessLogo(businessId, logoObject)
+        .then((res) => {
+          if (res) {
+            //TODO: To be replace with the state update of Business Details Comp
+            window.location.reload()
+          }
+        })
+      
+    }, false)
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   }
   
   return (
@@ -70,7 +104,7 @@ const ProfileDataSection = (props: Props) => {
           <div className={"container__left-column__upload-section-wrapper"}>
             <div className={"container__left-column__upload-section-wrapper__upload-section-icon"}>
               <div className={"container__left-column__upload-section-wrapper__icon-background"}>
-                <Add onClick={ () => {
+                <Add onClick={() => {
                   document.getElementById('pictureUpload').click();
                 }}
                 />
@@ -81,7 +115,7 @@ const ProfileDataSection = (props: Props) => {
                   id='pictureUpload'
                   type="file"
                   className={"hide"}
-                  />
+                />
               </div>
             </div>
             <div className={"container__left-column__upload-section-wrapper__upload-section-text"}>
@@ -114,17 +148,28 @@ const ProfileDataSection = (props: Props) => {
             {/*Generated handles*/}
             {businessHandles.map((value: any, index: number) => (
               <React.Fragment key={index}>
-                <Paper className={"container__right-column__social-box"}>
-                  <div className={"container__right-column__social-box__icon"}>
-                    {handleGenerator(value.socialMedia)}
-                  </div>
-                  <div className={"container__right-column__social-box__text"}>
-                    <h2>{value.socialMedia}</h2>
-                  </div>
+                <Paper
+                  className={classes.sMHBackgroundPaper}
+                  onClick={event => handleSocialMediaListItemModal(event, index)}>
+                  <Box sx={{flexGrow: 1}}>
+                    <Grid container
+                          className={classes.sMHBackgroundGrid}
+                          spacing={3}
+                          direction={"row"} alignItems={"center"}>
+                      <Grid item xs={"auto"}>
+                        <HandleGenerator handleName={value.socialMedia}/>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <p className={classes.sMHText}>
+                          {value.profileName}
+                        </p>
+                      </Grid>
+                    </Grid>
+                  </Box>
                 </Paper>
               </React.Fragment>
             ))}
-            
+          
           </Stack>
         </div>
       </div>

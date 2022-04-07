@@ -1,0 +1,48 @@
+.modal-wrapper {
+  width: 400px;
+  height: 400px;
+  background-color: aliceblue;
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 20vh auto auto;
+}
+
+.modal-container {
+  width: inherit;
+  height: inherit;
+
+  h1 {
+    text-align: center;
+  }
+
+  &__form {
+    width: 300px;
+    height: 280px;
+    display: inline-grid;
+    row-gap: 20px;
+    padding: 2rem;
+  }
+
+  &__form-control {
+    padding: 1rem;
+  }
+
+  &__body{
+    display: flex;
+    height: inherit;
+    width: inherit;
+    -ms-overflow-style: none;
+  }
+
+  &__tiles {
+    text-align: center;
+    min-width: 100px;
+    max-width: 160px;
+
+    &__icons {
+      margin: auto;
+      text-align: center;
+      transform: scale(1.7);
+    }
+  }
+}
