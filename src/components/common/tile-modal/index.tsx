@@ -1,6 +1,6 @@
 import Modal from "@mui/material/Modal";
 import {Box, FormControl, FormHelperText, Input, InputLabel} from "@mui/material";
-import handleIconGenerator from "../../../utils/handleGenerator";
+import handleIconGenerator from "../HandleIconGenerator";
 import React from "react";
 import {makeStyles} from "@mui/styles";
 

@@ -2,14 +2,15 @@ import React, {useEffect, useState} from "react";
 import "./index.scss";
 import {Box, Grid, Paper, Stack} from "@mui/material";
 import {Add, AddCircleRounded, Twitter} from "@mui/icons-material";
-import handleGenerator from "../../utils/handleGenerator";
 import {useSelector} from "react-redux";
 import {State} from "../../reducers";
 import SocialMediaModal from "../common/social-media-modal";
 import services from "../../services";
 import {Logo, businessHandle} from "../../common/types";
 import {makeStyles} from "@mui/styles";
-import HandleGenerator from "../../utils/handleGenerator";
+import HandleIconGenerator from "../common/HandleIconGenerator";
+import SocialMediaListItemModal from "../common/social-media-list-item-modal";
+import HandleGenerator from "../common/handle-generator";
 
 interface Props {
   description: string,
@@ -33,7 +34,8 @@ const useStyles = makeStyles({
     borderRadius: 20,
     margin: "auto",
     justifyContent: "center",
-    paddingBottom: "10px"
+    paddingBottom: "10px",
+    width: "100%"
   },
   sMHBackgroundGrid: {
     margin: "auto",
@@ -41,7 +43,7 @@ const useStyles = makeStyles({
 })
 
 const ProfileDataSection = (props: Props) => {
-  const businessHandles: [businessHandle] = useSelector(
+  const businessHandles: any = useSelector(
     (state: State) => state.application.businessDetails?.businessHandles)
   const businessId = useSelector((state: State) => state.application.businessDetails?._id)
   const title = useSelector((state: State) => state.application.businessDetails?.title)
@@ -62,7 +64,7 @@ const ProfileDataSection = (props: Props) => {
   const handleSocialMediaModal = () => {
     setOpen(true)
   }
-  
+
   const handleCloseModal = () => {
     setOpen(false)
   }
@@ -99,7 +101,10 @@ const ProfileDataSection = (props: Props) => {
   return (
     <div className={"data-wrapper"}>
       <div className={"container"}>
-        <SocialMediaModal isOpen={open} handleClose={handleCloseModal}/>
+        <SocialMediaModal
+          isOpen={open}
+          handleClose={handleCloseModal}
+        />
         <div className={"container__left-column"}>
           <div className={"container__left-column__upload-section-wrapper"}>
             <div className={"container__left-column__upload-section-wrapper__upload-section-icon"}>
@@ -137,40 +142,34 @@ const ProfileDataSection = (props: Props) => {
         </div>
         <div className={"container__right-column"}>
           <Stack spacing={3} maxWidth={"xs"}>
-            <Paper onClick={handleSocialMediaModal} className={"container__right-column__social-box"}>
-              <div className={"container__right-column__social-box__icon"}>
-                <AddCircleRounded fontSize={"large"}/>
-              </div>
-              <div className={"container__right-column__social-box__text"}>
-                <h2>ADD</h2>
-              </div>
+            <Paper onClick={handleSocialMediaModal}
+                   className={classes.sMHBackgroundPaper}>
+              <Box sx={{flexGrow: 1}}>
+                <Grid container
+                      className={classes.sMHBackgroundGrid}
+                      spacing={3}
+                      direction={"row"} alignItems={"center"}>
+                  <Grid item xs={"auto"}>
+                    <AddCircleRounded fontSize={"large"}/>
+                  </Grid>
+                  <Grid item xs={"auto"}>
+                    <p className={classes.sMHText}>
+                      ADD LINK
+                    </p>
+                  </Grid>
+                </Grid>
+              </Box>
             </Paper>
-            {/*Generated handles*/}
             {businessHandles.map((value: any, index: number) => (
-              <React.Fragment key={index}>
-                <Paper
-                  className={classes.sMHBackgroundPaper}
-                  onClick={event => handleSocialMediaListItemModal(event, index)}>
-                  <Box sx={{flexGrow: 1}}>
-                    <Grid container
-                          className={classes.sMHBackgroundGrid}
-                          spacing={3}
-                          direction={"row"} alignItems={"center"}>
-                      <Grid item xs={"auto"}>
-                        <HandleGenerator handleName={value.socialMedia}/>
-                      </Grid>
-                      <Grid item xs={8}>
-                        <p className={classes.sMHText}>
-                          {value.profileName}
-                        </p>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Paper>
-              </React.Fragment>
+              <HandleGenerator
+                index={index}
+                handleTitle={value.socialMedia}
+                handleName={value.profileName}
+              />
             ))}
-          
           </Stack>
+          
+          
         </div>
       </div>
     </div>

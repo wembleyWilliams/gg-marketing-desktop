@@ -15,7 +15,7 @@ import {
   Typography
 } from "@mui/material";
 import {ArrowBack} from "@mui/icons-material";
-import handleIconGenerator from "../../../utils/handleGenerator";
+import handleIconGenerator from "../HandleIconGenerator";
 import {Formik, FormikValues} from 'formik';
 import {socialMediaSelectSchema} from "../../../utils/validation";
 import services from "../../../services";

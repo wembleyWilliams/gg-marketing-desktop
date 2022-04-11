@@ -12,11 +12,11 @@ export interface BusinessData  {
         rating?: Number,
         newFollowers?: Number
     },
-    businessHandles?: [{
+    businessHandles?: Array<{
         socialMedia: string,
         profileName: string,
         profileUrl: string,
-    }],
+    }>,
     businessId: string
 }
 

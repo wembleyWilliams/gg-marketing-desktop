@@ -9,12 +9,14 @@ import {State} from "../../reducers";
 import Loading from "../../components/common/loading";
 import {setBusinessDetails} from "../../actions/applicationActions";
 import {useDispatch, useSelector} from "react-redux";
+import localUser from "../../localUser.json"
 
 const log = require('loglevel');
 log.setDefaultLevel("INFO")
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  
   const description = useSelector(
     (state: State) => state.application.businessDetails?.description)
   const title = useSelector(
@@ -23,22 +25,27 @@ const Dashboard = () => {
     (state: State) => state.user.userDetails?.firstname)
   const lastname = useSelector(
     (state: State) => state.user.userDetails?.lastname)
-  
   const businessId = useSelector(
     (state: State) => state.user.userDetails?.businessId)
+  
   const [completed, setCompleted] = useState(false);
   
   useEffect(() => {
     log.info("Retrieving business data")
-    services
-      .getBusiness(businessId)
-      .then((res) => {
-        dispatch(setBusinessDetails(res))
-        setCompleted(true)
-      })
-      .catch((err) => {
-        log.error(err)
-      })
+    
+    //TODO: Remove this local approach before going live
+    dispatch(setBusinessDetails(localUser))
+    setCompleted(true)
+    
+    // services
+    //   .getBusiness(businessId)
+    //   .then((res) => {
+    //     dispatch(setBusinessDetails(res))
+    //     setCompleted(true)
+    //   })
+    //   .catch((err) => {
+    //     log.error(err)
+    //   })
   }, [businessId, completed])
   
   

@@ -5,7 +5,6 @@ import {
   Twitter, YouTube, InsertLink
 } from "@mui/icons-material";
 import {makeStyles} from "@mui/styles";
-// import SnapchatGhost from "@emotion-icons/fa-brands/SnapchatGhost"
 
 const useStyles = makeStyles({
   icon:{
@@ -14,7 +13,7 @@ const useStyles = makeStyles({
   
 })
 
-const HandleGenerator = (handleName: any) => {
+const HandleIconGenerator = (handleName: any) => {
   const classes = useStyles();
   
   switch(handleName.handleName){
@@ -54,4 +53,4 @@ const HandleGenerator = (handleName: any) => {
   }
 }
 
-export default HandleGenerator
+export default HandleIconGenerator
