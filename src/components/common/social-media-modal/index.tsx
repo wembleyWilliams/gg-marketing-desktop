@@ -137,7 +137,7 @@ const SocialMediaModal = (props: Props) => {
     };
     
     services
-      .updateBusinessHandles(businessId, data)
+      .addBusinessHandle(businessId, data)
       .then((res) => {
         setSelectedSocialMedia(null)
         return res

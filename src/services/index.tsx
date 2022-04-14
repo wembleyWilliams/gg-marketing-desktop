@@ -84,7 +84,7 @@ const services = {
   },
   updateBusiness: async (businessId: number) => {
   },
-  updateBusinessHandles: async (businessId: any, handle: businessHandle) =>{
+  addBusinessHandle: async (businessId: any, handle: businessHandle) =>{
     let result: any;
     result =
       axios.post(`${url}/business/update/${businessId}`,

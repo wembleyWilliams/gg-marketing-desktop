@@ -38,10 +38,20 @@ const useStyles = makeStyles({
 const HandleGenerator = (props: Props) => {
   const classes = useStyles();
   const [openSocialMediaListItemModal, setOpenSocialMediaListItemModal] = useState(false)
-  
+  const [handleObject, setHandleObject] = useState(
+    {
+      index: 0,
+      handleTitle: '',
+      handleName:''
+    }
+  );
   const handleSocialMediaListItemModal = (event: any, index: number) => {
     setOpenSocialMediaListItemModal(true)
-    console.log(index)
+    setHandleObject({
+      index: index,
+      handleTitle: props.handleTitle,
+      handleName: props.handleName
+    })
   }
   
   const handleCloseSocialMediaListItemModal = () => {
@@ -53,6 +63,7 @@ const HandleGenerator = (props: Props) => {
       <SocialMediaListItemModal
         isOpen={openSocialMediaListItemModal}
         handleClose={handleCloseSocialMediaListItemModal}
+        handleObject={handleObject}
       />
       <Paper
         className={classes.sMHBackgroundPaper}

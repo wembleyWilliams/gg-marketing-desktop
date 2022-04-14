@@ -86,3 +86,14 @@ export const registrationSchema = () => {
     
   })
 }
+
+export const updateMediaHandle = () =>{
+  return Yup.object().shape({
+    link_profile_name: Yup.string()
+      .required('Please enter a profile name or link title'),
+    linkUrl: Yup.string()
+      .required('No profile URL provided'),
+    linkType: Yup.string()
+      .required('A link must be provided')
+  })
+}

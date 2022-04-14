@@ -3,7 +3,7 @@ import "./index";
 import {makeStyles} from "@mui/styles";
 import Modal from '@mui/material/Modal';
 import {
-  Box, Button,
+  Box, Button, Container,
   FormControl,
   FormHelperText,
   Grid,
@@ -14,16 +14,17 @@ import {
   Stack,
   Typography
 } from "@mui/material";
-import {ArrowBack} from "@mui/icons-material";
+import {ArrowBack, CheckCircle} from "@mui/icons-material";
 import handleIconGenerator from "../HandleIconGenerator";
 import {Formik, FormikValues} from 'formik';
-import {socialMediaSelectSchema} from "../../../utils/validation";
+import {socialMediaSelectSchema, updateMediaHandle} from "../../../utils/validation";
 import services from "../../../services";
 import {useSelector} from "react-redux";
 import {State} from "../../../reducers";
 import CloseIcon from '@mui/icons-material/Close';
 import {businessHandle} from "../../../common/types";
 import log from "loglevel";
+import HandleGenerator from "../handle-generator";
 
 const localHandles = require("../../../localHandles.json");
 
@@ -31,7 +32,7 @@ const localHandles = require("../../../localHandles.json");
 interface Props {
   isOpen: boolean,
   handleClose: any,
-  userBusinessHandles?: any
+  handleObject: { index: number, handleTitle: string, handleName: string }
 }
 
 const useStyles = makeStyles({
@@ -108,17 +109,22 @@ const useStyles = makeStyles({
   },
   dialogTitle: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "end",
     alignItems: "center"
+  },
+  
+  submit: {
+    display: "flex",
+    justifyContent: "end",
+    paddingTop: 20
   }
   
 })
 
-
 const SocialMediaListItemModal = (props: Props) => {
   const classes = useStyles();
   //TODO: Ensure the handles that are already in the user's list can be filtered
-  let userHandles = props.userBusinessHandles
+  // let userHandles = props.userBusinessHandles
   const [openTileModal, setOpenTileModal] = useState(false)
   const [selectedSocialMedia, setSelectedSocialMedia] = useState('')
   const [localIsOpen, setLocalIsOpen] = useState(true)
@@ -126,9 +132,9 @@ const SocialMediaListItemModal = (props: Props) => {
   const businessId = useSelector(
     (state: State) => state.application.businessDetails?._id)
   
-  useEffect(()=>{
+  useEffect(() => {
   
-  },[])
+  }, [])
   
   const handleChange = (event: any) => {
     setLink(event.target.value)
@@ -140,19 +146,20 @@ const SocialMediaListItemModal = (props: Props) => {
   
   const handleSubmit = (values: any) => {
     let data = {
-      ...values,
-      socialMedia: selectedSocialMedia
+      index: props.handleObject?.index,
+      ...values
     };
     
-    services
-      .updateBusinessHandles(businessId, data)
-      .then((res) => {
-        setSelectedSocialMedia(null)
-        return res
-      })
-      .catch((err) => {
-        log.error(err)
-      })
+    console.log(data)
+    // services
+    //   .addBusinessHandle(businessId, data)
+    //   .then((res) => {
+    //     setSelectedSocialMedia(null)
+    //     return res
+    //   })
+    //   .catch((err) => {
+    //     log.error(err)
+    //   })
   }
   
   const handleBack = (event: any) => {
@@ -166,74 +173,109 @@ const SocialMediaListItemModal = (props: Props) => {
       onClose={props.handleClose}
     >
       <Box className={classes.root}
-        sx={{flexGrow: 1}}
+           sx={{flexGrow: 1}}
       >
-        <Typography className={classes.dialogTitle}>
-          <h1>Edit Link</h1>
-          <IconButton onClick={props.handleClose}>
-            <CloseIcon />
-          </IconButton>
-        </Typography>
-        
-        <Formik
-          initialValues={{
-            links: '',
-            linkUrl:'',
-          }}
-          onSubmit={(values)=>{
-            handleSubmit(values)
-          }}>
-          {({
-            values,
-            errors,
-            touched,
-            handleSubmit,
-            handleChange
-          })=>(
-            <form onSubmit={handleSubmit}>
-              <FormControl variant="standard" fullWidth>
-                <InputLabel id="links-label">Link Labels</InputLabel>
-                <Select
-                  labelId="links-label"
-                  id="links"
-                  name="links"
-                  label="Link Types"
-                  value={values.links}
-                  onChange={event => handleChange(event)}
-                >
-                  <MenuItem value=""><em>None</em></MenuItem>
-                  <MenuItem value={'Twitter'}>Twitter</MenuItem>
-                  <MenuItem value={'Facebook'}>Facebook</MenuItem>
-                  <MenuItem value={'Instagram'}>Instagram</MenuItem>
-                  <MenuItem value={'YouTube'}>YouTube</MenuItem>
-                  <MenuItem value={'Other'}>Other</MenuItem>
-                </Select>
-              </FormControl>
-              <FormHelperText
-                className={touched.links && errors.links ? classes.helperErrorText : classes.helperText}>
-                {touched.links && errors.links ? errors.links :
-                  'Enter your media handle'}
-              </FormHelperText>
+        <Stack spacing={3}>
+          
+          <div className={classes.dialogTitle}>
+            <p>Close</p>
+            <IconButton onClick={props.handleClose}>
+              <CloseIcon/>
+            </IconButton>
+          </div>
+          
+          <HandleGenerator
+            index={props.handleObject?.index}
+            handleTitle={props.handleObject?.handleTitle}
+            handleName={props.handleObject?.handleName}
+          />
+          
+          <Formik
+            initialValues={{
+              link_profile_name: '',
+              linkType: '',
+              linkUrl: '',
+            }}
+            validationSchema={updateMediaHandle()}
+            onSubmit={(values) => {
+              handleSubmit(values)
+            }}>
+            {({
+                values,
+                errors,
+                touched,
+                handleSubmit,
+                handleChange
+              }) => (
               
-              <FormControl variant="standard" fullWidth>
-                <InputLabel>Profile Link</InputLabel>
-                <Input
-                  id="linkUrl"
-                  name="linkUrl"
-                  value={values.linkUrl}
-                  onChange={event => handleChange(event)}
-                  placeholder={"What's your profile link?"}
-                />
-              </FormControl>
-              <FormHelperText
-                className={touched.linkUrl && errors.linkUrl ? classes.helperErrorText : classes.helperText}>
-                {touched.linkUrl && errors.linkUrl ? errors.linkUrl :
-                  'Enter your profile link'}
-              </FormHelperText>
-            </form>
-          )}
-        </Formik>
+              <form onSubmit={handleSubmit}>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel id="links-label">Link Type</InputLabel>
+                  <Select
+                    labelId="links-label"
+                    id="linkType"
+                    name="linkType"
+                    label="Link Types"
+                    value={values.linkType}
+                    onChange={event => handleChange(event)}
+                  >
+                    <MenuItem value=""><em>None</em></MenuItem>
+                    <MenuItem value={'Twitter'}>Twitter</MenuItem>
+                    <MenuItem value={'Facebook'}>Facebook</MenuItem>
+                    <MenuItem value={'Instagram'}>Instagram</MenuItem>
+                    <MenuItem value={'YouTube'}>YouTube</MenuItem>
+                    <MenuItem value={'Other'}>Other</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormHelperText
+                  className={touched.linkType && errors.linkType ? classes.helperErrorText : classes.helperText}>
+                  {touched.linkType && errors.linkType ? errors.linkType :
+                    'Select your media type'}
+                </FormHelperText>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Link Title/Profile Name</InputLabel>
+                  <Input
+                    id="link_profile_name"
+                    name="link_profile_name"
+                    value={values.link_profile_name}
+                    onChange={event => handleChange(event)}
+                  />
+                </FormControl>
+                <FormHelperText
+                  className={touched.link_profile_name && errors.link_profile_name ? classes.helperErrorText : classes.helperText}>
+                  {touched.link_profile_name && errors.link_profile_name ? errors.link_profile_name :
+                    'Enter your link title/profile name'}
+                </FormHelperText>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Profile Link</InputLabel>
+                  <Input
+                    id="linkUrl"
+                    name="linkUrl"
+                    value={values.linkUrl}
+                    onChange={event => handleChange(event)}
+                  />
+                </FormControl>
+                <FormHelperText
+                  className={touched.linkUrl && errors.linkUrl ? classes.helperErrorText : classes.helperText}>
+                  {touched.linkUrl && errors.linkUrl ? errors.linkUrl :
+                    'Enter your link URL'}
+                </FormHelperText>
+                
+                <Box className={classes.submit} sx={{flexGrow: 1}}>
+                  <IconButton type={"submit"} disableRipple>
+                    <Typography>
+                      <p>Submit</p>
+                    </Typography>
+                    <CheckCircle  sx={{color: '#32CD32'}} fontSize={"large"}/>
+                  </IconButton>
+                </Box>
+                
+              </form>
+            )}
+          </Formik>
         
+        
+        </Stack>
       </Box>
     </Modal>
   
