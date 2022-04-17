@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import "./index.scss";
-import {Box, Grid, Paper, Stack} from "@mui/material";
+import {Box, Container, Grid, IconButton, Paper, Stack} from "@mui/material";
 import {Add, AddCircleRounded, Twitter} from "@mui/icons-material";
+import EditIcon from '@mui/icons-material/Edit';
 import {useSelector} from "react-redux";
 import {State} from "../../reducers";
 import SocialMediaModal from "../common/social-media-modal";
@@ -39,6 +40,87 @@ const useStyles = makeStyles({
   },
   sMHBackgroundGrid: {
     margin: "auto",
+  },
+  cardTitleName: {
+    backgroundColor: 'white',
+    padding: '1rem',
+    maxHeight: 320,
+    maxWidth: 280,
+    overflow: 'hidden',
+    overflowY: 'scroll',
+    scrollbarWidth: 'none'
+  },
+  cardDescription: {
+    backgroundColor: 'white',
+    padding: '1rem',
+    maxHeight: 320,
+    maxWidth: 280,
+    overflow: 'hidden',
+    overflowY: 'scroll',
+    scrollbarWidth: 'none'
+  },
+  sectionWrapper: {
+    paddingTop: '1rem',
+    maxHeight: 500,
+    width: '45vw'
+  },
+  sectionContainer: {
+    height: '65vh',
+  },
+  leftColumn: {
+    height: 'inherit',
+    width: '50%'
+  },
+  rightColumn: {
+    height: '65vh',
+    maxWidth: 250,
+    maxHeight: 'inherit',
+    overflow: 'hidden',
+    overflowY: 'scroll',
+    scrollbarWidth:'none',
+    padding: '1rem'
+  }
+  ,
+  uploadSectionIcon: {
+    display: 'flex',
+    margin: 'auto',
+    width: 110,
+    height: 90,
+    backgroundColor: '#EEEEE',
+    borderRadius: 30,
+    alignContent: 'center',
+    justifyContent: 'center'
+  },
+  uploadSectionText: {
+    width: 'max-content',
+    margin: 'auto',
+    fontSize: 20
+  },
+  iconBackground: {
+    backgroundColor: '#EEEEE',
+    padding: 5,
+    borderRadius: 30
+  },
+  uploadSection: {
+    display: 'flex',
+    backgroundColor: 'EEE',
+    padding: 5,
+    borderRadius: 30,
+    maxWidth: 299,
+    width: '100%'
+  },
+  editableData: {
+    padding: '1rem',
+    borderRadius: 30,
+    width: 'inherit'
+  },
+  editableDataTitle: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  hide: {
+    display: 'none'
   }
 })
 
@@ -64,7 +146,7 @@ const ProfileDataSection = (props: Props) => {
   const handleSocialMediaModal = () => {
     setOpen(true)
   }
-
+  
   const handleCloseModal = () => {
     setOpen(false)
   }
@@ -99,48 +181,60 @@ const ProfileDataSection = (props: Props) => {
   }
   
   return (
-    <div className={"data-wrapper"}>
-      <div className={"container"}>
+    <Grid container className={classes.sectionWrapper}>
+      <Grid
+        container
+        className={classes.sectionContainer}
+        direction={"column"}
+      >
         <SocialMediaModal
           isOpen={open}
           handleClose={handleCloseModal}
         />
-        <div className={"container__left-column"}>
-          <div className={"container__left-column__upload-section-wrapper"}>
-            <div className={"container__left-column__upload-section-wrapper__upload-section-icon"}>
-              <div className={"container__left-column__upload-section-wrapper__icon-background"}>
-                <Add onClick={() => {
-                  document.getElementById('pictureUpload').click();
-                }}
-                />
+        <Grid container item className={classes.leftColumn} spacing={3} xs={6}>
+          <Grid container item>
+              <Container className={classes.uploadSection}>
+                <Paper className={classes.uploadSectionIcon}>
+                  <IconButton>
+                    <Add onClick={() => {
+                      document.getElementById('pictureUpload').click();
+                    }}/>
+                  </IconButton>
+                </Paper>
                 <input
                   name='pictureUpload'
                   accept="image/png,image/jpeg,image/jpg"
                   onChange={event => handleImageUpload(event)}
                   id='pictureUpload'
                   type="file"
-                  className={"hide"}
+                  className={classes.hide}
                 />
-              </div>
-            </div>
-            <div className={"container__left-column__upload-section-wrapper__upload-section-text"}>
-              <b>UPLOAD IMAGE</b>
-            </div>
-          </div>
-          <div className={"container__left-column__upload-section-wrapper__upload-section-description"}>
-            <h2>Description</h2>
-            <p>
-              {props.description}
-            </p>
-          </div>
-          <div className={"container__left-column__upload-section-wrapper__upload-section-title"}>
-            <h2>Card Title/Name</h2>
-            <p>
-              {title}
-            </p>
-          </div>
-        </div>
-        <div className={"container__right-column"}>
+                <b className={classes.uploadSectionText} >UPLOAD IMAGE</b>
+              </Container>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper className={classes.editableData}>
+              <Box className={classes.editableDataTitle}>
+                <h2>Title Card</h2> <IconButton disableRipple><EditIcon/></IconButton>
+              </Box>
+              <p>
+                {title}
+              </p>
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper className={classes.editableData}>
+              <Box className={classes.editableDataTitle}>
+                <h2>Description</h2> <IconButton disableRipple><EditIcon/></IconButton>
+              </Box>
+              <p>
+                {props.description}
+              </p>
+            </Paper>
+          </Grid>
+          
+        </Grid>
+        <Grid container item className={classes.rightColumn}>
           <Stack spacing={3} maxWidth={"xs"}>
             <Paper onClick={handleSocialMediaModal}
                    className={classes.sMHBackgroundPaper}>
@@ -168,11 +262,11 @@ const ProfileDataSection = (props: Props) => {
               />
             ))}
           </Stack>
-          
-          
-        </div>
-      </div>
-    </div>
+        
+        
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
 
